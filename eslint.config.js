@@ -50,7 +50,8 @@ export default tseslint.config(
         { blankLine: "always", prev: "block", next: "*" },
         { blankLine: "always", prev: "*", next: "block-like" },
         { blankLine: "always", prev: "block-like", next: "*" }
-      ]
+      ],
+      "@typescript-eslint/explicit-function-return-type": "error"
     },
   },
 );
