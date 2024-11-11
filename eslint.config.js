@@ -40,7 +40,17 @@ export default tseslint.config(
       }],
       "brace-style": "off",
       "curly": ["error", "all"],
-      "@typescript-eslint/no-unused-vars": "off" // checked by TSC
+      "@typescript-eslint/no-unused-vars": "off", // checked by TSC
+      "padding-line-between-statements": [
+        "error",
+        { blankLine: "always", prev: "*", next: "return" },
+        { blankLine: "always", prev: "directive", next: "*" },
+        { blankLine: "any", prev: "directive", next: "directive" },
+        { blankLine: "always", prev: "*", next: "block" },
+        { blankLine: "always", prev: "block", next: "*" },
+        { blankLine: "always", prev: "*", next: "block-like" },
+        { blankLine: "always", prev: "block-like", next: "*" }
+      ]
     },
   },
 );
