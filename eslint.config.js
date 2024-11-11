@@ -6,7 +6,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default tseslint.config(
-  { ignores: [ "dist" ]},
+  { ignores: [ "dist" ] },
   {
     extends: [ js.configs.recommended, ...tseslint.configs.recommended ],
     files: [ "**/*.{js,ts,tsx}" ],
@@ -26,7 +26,7 @@ export default tseslint.config(
         { allowConstantExport: true },
       ],
       "eqeqeq": [ "error", "always" ],
-      "indent": [ "error", 2, { "SwitchCase": 1 }],
+      "indent": [ "error", 2, { "SwitchCase": 1 } ],
       "quotes": [ "error", "double" ],
       "no-var": "error",
       "prefer-const": "error",
@@ -37,7 +37,7 @@ export default tseslint.config(
       "no-trailing-spaces": [ "error", {
         "skipBlankLines": false,
         "ignoreComments": false
-      }],
+      } ],
       "brace-style": "off",
       "curly": [ "error", "all" ],
       "@typescript-eslint/no-unused-vars": "off", // checked by TSC
@@ -46,11 +46,18 @@ export default tseslint.config(
         "error",
         { blankLine: "always", prev: "*", next: "return" },
         { blankLine: "always", prev: "directive", next: "*" },
+        { blankLine: "any", prev: "directive", next: "directive" },
         { blankLine: "any", prev: "directive", next: "directive" }
       ],
-      "@typescript-eslint/explicit-function-return-type": "error",
-      "array-bracket-spacing": [ "error", "always", { "objectsInArrays": false, "arraysInArrays": false }],
-      "object-curly-spacing": [ "error", "always", { "arraysInObjects": false, "objectsInObjects": false }]
+      "array-bracket-spacing": [ "error", "always" ],
+      "object-curly-spacing": [ "error", "always" ],
+      "@stylistic/ts/type-annotation-spacing": [
+        "error",
+        { "before": false, "after": false, "overrides":{ "colon": { "before": false, "after": true }, "arrow": { "before": true, "after": true } } }
+      ],
+      "arrow-parens": [ "error", "always" ],
+      "keyword-spacing": [ "error", { "before": true, "after": true } ],
+      "comma-spacing": [ "error", { "before": false, "after": true } ],
     },
   },
 );
