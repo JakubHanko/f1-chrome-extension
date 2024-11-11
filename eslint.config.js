@@ -1,7 +1,8 @@
 import js from '@eslint/js'
-import globals from 'globals'
+import stylisticTs from '@stylistic/eslint-plugin-ts'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
+import globals from 'globals'
 import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
@@ -16,6 +17,7 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      '@stylistic/ts': stylisticTs,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
@@ -23,6 +25,21 @@ export default tseslint.config(
         'warn',
         { allowConstantExport: true },
       ],
+      "eqeqeq": ["error", "always"],
+      "indent": ["error", 2, { "SwitchCase": 1 }],
+      "quotes": ["error", "double"],
+      "no-var": "error",
+      "prefer-const": "error",
+      "eol-last": ["error", "always"],
+      "@stylistic/ts/semi": ["error", "always"],
+      "semi": "off",
+      "no-extra-semi": ["error"],
+      "no-trailing-spaces": ["error", {
+        "skipBlankLines": false,
+        "ignoreComments": false
+      }],
+      "brace-style": "off",
+      "curly": ["error", "all"],
     },
   },
 )
