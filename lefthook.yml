@@ -8,6 +8,8 @@ pre-commit:
       skip:
         - merge
         - rebase
+    typecheck:
+      run: npm run typecheck
 
 pre-push:
   commands:
