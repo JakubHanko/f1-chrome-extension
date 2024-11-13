@@ -3,16 +3,20 @@ import "./App.css";
 
 import "@mantine/core/styles.css";
 
-import { createTheme, MantineProvider } from "@mantine/core";
+import { AppShell, colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import { CardsCarousel } from "./components/CardsCarousel";
+import { NavBar } from "./components/NavBar";
 import { GrandPrix } from "./types/GrandPrix";
 
 const SESSIONS_STORAGE_KEY = "sessions";
 const theme = createTheme({
-  fontFamily: "Montserrat, sans-serif",
-  defaultRadius: "md",
+  colors: {
+    "red": colorsTuple("#E00400"),
+    "black": colorsTuple("#15151E")
+  },
 });
 
+// TODO: navbar at the top - calendars, standings, ...
 const App: React.FC = () => {
   const [ grandPrix, setGrandPrix ] = useState<GrandPrix[]>([]);
 
@@ -40,12 +44,18 @@ const App: React.FC = () => {
   const currentTime = new Date();
   const nextGpIndex = grandPrix.findIndex((gp) => new Date(gp.date).getTime() > currentTime.getTime());
 
-  console.log(grandPrix);
-
   return (
     <>
-      <MantineProvider theme={theme} defaultColorScheme="dark">
-        <CardsCarousel data={grandPrix} initialSlide={nextGpIndex}></CardsCarousel>
+      <MantineProvider defaultColorScheme="dark" theme={theme}>
+        <AppShell
+          header={{ height: 60 }}
+          padding="md"
+        >
+          <NavBar/>
+          <AppShell.Main>
+            <CardsCarousel data={grandPrix} initialSlide={nextGpIndex}></CardsCarousel>
+          </AppShell.Main>
+        </AppShell>
       </MantineProvider>
     </>
   );

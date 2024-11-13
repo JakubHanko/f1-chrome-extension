@@ -1,27 +1,52 @@
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
-import { Paper, Text } from "@mantine/core";
+import { Container, List, Paper, Text } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
+import { Session } from "../types/Session";
 import classes from "./CardsCarousel.module.css";
 
 function Card(gp: GrandPrix) {
-  console.log(gp);
+  const convertToLocalTime = (dateString: string, timeString: string) => new Intl.DateTimeFormat("default", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit"
+  }).format(new Date(`${timeString}T${dateString}`));
+
+  const sessionArray: [string, Session?][] =
+    [
+      [ "First Practice", gp.FirstPractice ],
+      [ "Second Practice", gp.SecondPractice ],
+      [ "Third Practice", gp.ThirdPractice ],
+      [ "Sprint Quali", gp.SprintQualifying ],
+      [ "Sprint", gp.Sprint ],
+      [ "Quali", gp.Qualifying ],
+      [ "Race", { date: gp.date, time: gp.time } ]
+    ];
+
+  const createList = () => sessionArray.filter(([ _, session ]) => session !== undefined)
+    .map(([ title, session ]) => <List.Item>{title}: {session && convertToLocalTime(session.time, session.date)}</List.Item>);
 
   return (
     <Paper
-      shadow="md"
+      shadow="xs"
       p="xl"
       radius="md"
-      className={classes.card}
+      withBorder
+      // className={classes.card}
     >
-      <div>
-        <Text className={classes.category} size="xs">
+      <Container p="xl">
+        <Text size="md">
           {gp.raceName}
         </Text>
-        <Text className={classes.category} size="xs">
+        <Text size="md">
           {gp.Circuit.circuitName}
         </Text>
-      </div>
+        <List size="xs">
+          {...createList()}
+        </List>
+      </Container>
     </Paper>
   );
 }
@@ -35,11 +60,7 @@ export function CardsCarousel({ data, initialSlide }: {data: GrandPrix[], initia
 
   return (
     <Carousel
-      withIndicators
-      height={200}
       classNames={classes}
-      slideSize={{ base: "100%", sm: "50%", md: "33.333333%" }}
-      slideGap={{ base: 0, sm: "md" }}
       initialSlide={initialSlide === -1 ? data.length : initialSlide}
     >
       {slides}
