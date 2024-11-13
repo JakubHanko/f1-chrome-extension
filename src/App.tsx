@@ -4,7 +4,7 @@ import "./App.css";
 import "@mantine/core/styles.css";
 
 import { AppShell, colorsTuple, createTheme, MantineProvider } from "@mantine/core";
-import { CardsCarousel } from "./components/CardsCarousel";
+import { CircuitCarousel } from "./components/CircuitCarousel";
 import { NavBar } from "./components/NavBar";
 import { GrandPrix } from "./types/GrandPrix";
 
@@ -57,7 +57,7 @@ const App: React.FC = () => {
         >
           <NavBar/>
           <AppShell.Main>
-            <CardsCarousel data={grandPrix} initialSlide={nextGpIndex}></CardsCarousel>
+            <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
           </AppShell.Main>
         </AppShell>
       </MantineProvider>

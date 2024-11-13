@@ -1,10 +1,10 @@
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
-import { Container, List, Paper, Text } from "@mantine/core";
+import { Container, List, Paper } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
 import { Session } from "../types/Session";
-import classes from "./CardsCarousel.module.css";
-import { Flag } from "./Flag";
+import classes from "./CircuitCarousel.module.css";
+import { CircuitHeader } from "./CircuitHeader";
 
 function Card(gp: GrandPrix) {
   const convertToLocalTime = (dateString: string, timeString: string) => new Intl.DateTimeFormat("default", {
@@ -35,16 +35,9 @@ function Card(gp: GrandPrix) {
       p="xl"
       radius="md"
       withBorder
-      // className={classes.card}
     >
       <Container p="xl">
-        <Flag location={gp.Circuit.Location}/>
-        <Text size="md">
-          {gp.raceName}
-        </Text>
-        <Text size="md">
-          {gp.Circuit.circuitName}
-        </Text>
+        <CircuitHeader gp={gp}/>
         <List size="xs">
           {...createList()}
         </List>
@@ -53,7 +46,7 @@ function Card(gp: GrandPrix) {
   );
 }
 
-export function CardsCarousel({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) {
+export function CircuitCarousel({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) {
   const slides = data?.map((gp, i) => (
     <Carousel.Slide key={i}>
       <Card {...gp} />
