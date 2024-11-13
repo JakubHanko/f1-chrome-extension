@@ -1,3 +1,5 @@
+import { Location } from "./Location";
+
 export interface Circuit {
   circuitId: string;
   url: string;

@@ -4,6 +4,7 @@ import { Container, List, Paper, Text } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
 import { Session } from "../types/Session";
 import classes from "./CardsCarousel.module.css";
+import { Flag } from "./Flag";
 
 function Card(gp: GrandPrix) {
   const convertToLocalTime = (dateString: string, timeString: string) => new Intl.DateTimeFormat("default", {
@@ -16,9 +17,9 @@ function Card(gp: GrandPrix) {
 
   const sessionArray: [string, Session?][] =
     [
-      [ "First Practice", gp.FirstPractice ],
-      [ "Second Practice", gp.SecondPractice ],
-      [ "Third Practice", gp.ThirdPractice ],
+      [ "FP1", gp.FirstPractice ],
+      [ "FP2", gp.SecondPractice ],
+      [ "FP3", gp.ThirdPractice ],
       [ "Sprint Quali", gp.SprintQualifying ],
       [ "Sprint", gp.Sprint ],
       [ "Quali", gp.Qualifying ],
@@ -37,6 +38,7 @@ function Card(gp: GrandPrix) {
       // className={classes.card}
     >
       <Container p="xl">
+        <Flag location={gp.Circuit.Location}/>
         <Text size="md">
           {gp.raceName}
         </Text>
