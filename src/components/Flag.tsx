@@ -1,6 +1,6 @@
 import { getCode } from "country-list";
-import ReactCountryFlag from "react-country-flag";
 import { Location } from "../types/Location";
+import "./Flag.css";
 
 export function Flag({ location }: { location: Location }) {
   let code = getCode(location.country) || "";
@@ -12,11 +12,10 @@ export function Flag({ location }: { location: Location }) {
     code = "AE";
   }
 
-  return <ReactCountryFlag
-    countryCode={code}
-    style={{
-      fontSize: "4em",
-      lineHeight: "1em"
-    }}
-  />;
+  return (
+    <>
+      <span className={`fi fi-${code.toLowerCase()}`}
+      />
+    </>
+  );
 }
