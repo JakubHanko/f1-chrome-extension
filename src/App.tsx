@@ -10,6 +10,7 @@ import { GrandPrix } from "./types/GrandPrix";
 
 const SESSIONS_STORAGE_KEY = "sessions";
 const theme = createTheme({
+  fontFamily: "Rajdhani, sans-serif",
   colors: {
     "red": colorsTuple("#E00400"),
     "black": colorsTuple("#15151E")
