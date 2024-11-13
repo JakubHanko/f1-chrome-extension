@@ -22,18 +22,21 @@ const App: React.FC = () => {
   const [ grandPrix, setGrandPrix ] = useState<GrandPrix[]>([]);
 
   useEffect(() => {
+    const currentYear = new Date().getFullYear();
+    const storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
+
     const fetchData = async () => {
-      const response = await fetch("https://api.jolpi.ca/ergast/f1/2024/races"); // TODO: more seasons
+      const response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
-      localStorage.setItem(SESSIONS_STORAGE_KEY, JSON.stringify(result.MRData.RaceTable.Races));
+      localStorage.setItem(storageKey, JSON.stringify(result.MRData.RaceTable.Races));
 
       setGrandPrix(result);
     };
 
-    const cachedData = localStorage.getItem(SESSIONS_STORAGE_KEY);
+    const cachedData = localStorage.getItem(storageKey);
     if (cachedData) {
       setGrandPrix(JSON.parse(cachedData));
 
