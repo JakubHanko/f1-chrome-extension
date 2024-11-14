@@ -63,9 +63,9 @@ export function CircuitList({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean
       [ "FP2", gp.SecondPractice ],
       [ "FP3", gp.ThirdPractice ],
       [ "SQ", gp.SprintQualifying ],
-      [ "Sprint", gp.Sprint ],
-      [ "Quali", gp.Qualifying ],
-      [ "Race", { date: gp.date, time: gp.time } ]
+      [ "SPR", gp.Sprint ],
+      [ "QUA", gp.Qualifying ],
+      [ "GP", { date: gp.date, time: gp.time } ]
     ];
 
   const currentDate = new Date();
