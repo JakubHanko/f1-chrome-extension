@@ -1,7 +1,7 @@
-import { List, ThemeIcon } from "@mantine/core";
+import { Grid, GridCol, Text, ThemeIcon } from "@mantine/core";
 import { IconCheck, IconClock, IconFlag } from "@tabler/icons-react";
 import { GrandPrix } from "../types/GrandPrix";
-import { Session, SessionState, convertToLocalTime, getSessionDate } from "../types/Session";
+import { Session, SessionState, getSessionDate } from "../types/Session";
 
 const Icon = ({ state }: { state: SessionState }) => {
   if (state === SessionState.FUTURE) {
@@ -32,11 +32,26 @@ type ListItemProps = {
 };
 
 const ListItem = ({ title, session, state }: ListItemProps) => {
+  const sessionDate = getSessionDate(session);
+  const day = sessionDate.toLocaleDateString(undefined, { weekday: "short" });
+  const date = sessionDate.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+  const time = sessionDate.toLocaleTimeString(undefined, { hour: "numeric", minute: "2-digit", hour12: false });
+
   return (
     <>
-      <List.Item icon={<Icon state={state}/>}>
-        {title}: {convertToLocalTime(session)}
-      </List.Item>
+      <GridCol span={2} offset={1}>
+        <Icon state={state}/>
+      </GridCol>
+      <GridCol span={2}>
+        <Text size="sm" c={state === SessionState.PAST ? "dimmed": "white"}>
+          {title}
+        </Text>
+      </GridCol>
+      <GridCol span={7}>
+        <Text size="xs">
+          {day} &middot; {date} &middot; {time}
+        </Text>
+      </GridCol>
     </>
   );
 };
@@ -47,7 +62,7 @@ export function CircuitList({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean
       [ "FP1", gp.FirstPractice ],
       [ "FP2", gp.SecondPractice ],
       [ "FP3", gp.ThirdPractice ],
-      [ "Sprint Quali", gp.SprintQualifying ],
+      [ "SQ", gp.SprintQualifying ],
       [ "Sprint", gp.Sprint ],
       [ "Quali", gp.Qualifying ],
       [ "Race", { date: gp.date, time: gp.time } ]
@@ -69,10 +84,12 @@ export function CircuitList({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean
   }
 
   return (
-    <List
-      size="xs"
+    <Grid
+      justify="center"
+      align="center"
+      gutter="xs"
     >
       {...classifiedSessions.map((el) => <ListItem {...el}/>)}
-    </List>
+    </Grid>
   );
 }
