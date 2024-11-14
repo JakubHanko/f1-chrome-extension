@@ -3,7 +3,7 @@ import "./App.css";
 
 import "@mantine/core/styles.css";
 
-import { AppShell, colorsTuple, createTheme, MantineProvider } from "@mantine/core";
+import { AppShell, Center, colorsTuple, createTheme, Loader, MantineProvider } from "@mantine/core";
 import { CircuitCarousel } from "./components/CircuitCarousel";
 import { NavBar } from "./components/NavBar";
 import { GrandPrix } from "./types/GrandPrix";
@@ -20,33 +20,40 @@ const theme = createTheme({
 // TODO: navbar at the top - calendars, standings, ...
 const App: React.FC = () => {
   const [ grandPrix, setGrandPrix ] = useState<GrandPrix[]>([]);
+  const [ loading, setLoading ] = useState(true);
+  const [ error, setError ] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const currentYear = new Date().getFullYear();
     const storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
 
     const fetchData = async () => {
       const response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
       if (!response.ok) {
+        setError(true);
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
       const result = await response.json();
       localStorage.setItem(storageKey, JSON.stringify(result.MRData.RaceTable.Races));
 
-      setGrandPrix(result);
+      setGrandPrix(result.MRData.RaceTable.Races);
+      setLoading(false);
     };
 
     const cachedData = localStorage.getItem(storageKey);
     if (cachedData) {
       setGrandPrix(JSON.parse(cachedData));
+      setLoading(false);
 
       return;
     }
-    fetchData(); // Call the async function
+    fetchData();
   }, [ ]);
 
   const currentTime = new Date();
   const nextGpIndex = grandPrix.findIndex((gp) => new Date(gp.date).getTime() > currentTime.getTime());
+  console.log(error);
 
   return (
     <>
@@ -57,7 +64,10 @@ const App: React.FC = () => {
         >
           <NavBar/>
           <AppShell.Main>
-            <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
+            {loading
+              ? <Center style={{ height: "60vh" }}><Loader size="xl" color="red" type="dots"/></Center>
+              : <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
+            }
           </AppShell.Main>
         </AppShell>
       </MantineProvider>
