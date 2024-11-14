@@ -21,7 +21,6 @@ const theme = createTheme({
 const App: React.FC = () => {
   const [ grandPrix, setGrandPrix ] = useState<GrandPrix[]>([]);
   const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -29,10 +28,9 @@ const App: React.FC = () => {
     const storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
 
     const fetchData = async () => {
-      const response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
+      let response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
       if (!response.ok) {
-        setError(true);
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear - 1}/races`);
       }
       const result = await response.json();
       localStorage.setItem(storageKey, JSON.stringify(result.MRData.RaceTable.Races));
@@ -53,7 +51,6 @@ const App: React.FC = () => {
 
   const currentTime = new Date();
   const nextGpIndex = grandPrix.findIndex((gp) => new Date(gp.date).getTime() > currentTime.getTime());
-  console.log(error);
 
   return (
     <>
