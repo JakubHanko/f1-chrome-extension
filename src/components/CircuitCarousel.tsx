@@ -14,6 +14,10 @@ function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
       p="xl"
       radius="md"
       withBorder
+      style={{
+        background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
+        color: "white",
+      }}
     >
       <Container p="xl">
         <CircuitHeader gp={gp}/>
