@@ -1,5 +1,5 @@
 import { AppShell, Button, Flex } from "@mantine/core";
-import "./NavBar.module.css";
+import styles from "./NavBar.module.css";
 
 export function NavBar() {
   return (
@@ -12,10 +12,10 @@ export function NavBar() {
         direction="row"
         wrap="wrap"
       >
-        <Button bg="red" size="xl" radius="xs">
+        <Button className={styles.button} bg="red" size="xl" radius="xs">
                 Calendar
         </Button>
-        <Button bg="red" size="xl" radius="xs">
+        <Button className={styles.button} bg="red" size="xl" radius="xs">
                 Lorem Ipsum
         </Button>
       </Flex>
