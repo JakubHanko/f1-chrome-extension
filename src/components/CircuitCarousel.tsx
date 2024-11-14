@@ -1,34 +1,13 @@
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
-import { Container, List, Paper } from "@mantine/core";
+import { Container, Divider, Paper } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
-import { Session } from "../types/Session";
 import classes from "./CircuitCarousel.module.css";
 import { CircuitHeader } from "./CircuitHeader";
+import { CircuitList } from "./CircuitList";
 
-function Card(gp: GrandPrix) {
-  const convertToLocalTime = (dateString: string, timeString: string) => new Intl.DateTimeFormat("default", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "2-digit"
-  }).format(new Date(`${timeString}T${dateString}`));
 
-  const sessionArray: [string, Session?][] =
-    [
-      [ "FP1", gp.FirstPractice ],
-      [ "FP2", gp.SecondPractice ],
-      [ "FP3", gp.ThirdPractice ],
-      [ "Sprint Quali", gp.SprintQualifying ],
-      [ "Sprint", gp.Sprint ],
-      [ "Quali", gp.Qualifying ],
-      [ "Race", { date: gp.date, time: gp.time } ]
-    ];
-
-  const createList = () => sessionArray.filter(([ _, session ]) => session !== undefined)
-    .map(([ title, session ]) => <List.Item>{title}: {session && convertToLocalTime(session.time, session.date)}</List.Item>);
-
+function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
   return (
     <Paper
       shadow="xs"
@@ -38,9 +17,8 @@ function Card(gp: GrandPrix) {
     >
       <Container p="xl">
         <CircuitHeader gp={gp}/>
-        <List size="xs">
-          {...createList()}
-        </List>
+        <Divider my="md"/>
+        <CircuitList gp={gp} isGpNext={isGpNext}/>
       </Container>
     </Paper>
   );
@@ -49,7 +27,7 @@ function Card(gp: GrandPrix) {
 export function CircuitCarousel({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) {
   const slides = data?.map((gp, i) => (
     <Carousel.Slide key={i}>
-      <Card {...gp} />
+      <CircuitCard gp={gp} isGpNext={i === initialSlide} />
     </Carousel.Slide>
   ));
 
