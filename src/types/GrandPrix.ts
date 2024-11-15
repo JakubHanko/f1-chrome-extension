@@ -1,6 +1,5 @@
 import { Circuit } from "./Circuit";
-import { Session } from "./Session";
-
+import { AnnotatedSession, classifySession, Session } from "./Session";
 export interface GrandPrix {
   Circuit: Circuit;
   FirstPractice: Session;
@@ -17,3 +16,20 @@ export interface GrandPrix {
   time: string;
   url: string;
 }
+
+export const getClassifiedSessions = (gp: GrandPrix): AnnotatedSession[] => {
+  return ([
+    [ "FP1", gp.FirstPractice ],
+    [ "FP2", gp.SecondPractice ],
+    [ "FP3", gp.ThirdPractice ],
+    [ "SQ", gp.SprintQualifying ],
+    [ "SPR", gp.Sprint ],
+    [ "QUA", gp.Qualifying ],
+    [ "GP", { date: gp.date, time: gp.time } ]
+  ].filter(([ _, session ]) => session !== undefined) as [string, Session][])
+    .map(([ title, session ]) => ({
+      title: title,
+      session: session,
+      state: classifySession(session)
+    }));
+};

@@ -22,7 +22,7 @@ function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
       <Container p="xl">
         <CircuitHeader gp={gp}/>
         <Divider my="md"/>
-        <CircuitList gp={gp} isGpNext={isGpNext}/>
+        <CircuitList gp={gp} isNext={isGpNext}/>
       </Container>
     </Paper>
   );

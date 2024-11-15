@@ -6,6 +6,7 @@ import "@mantine/core/styles.css";
 import { AppShell, Center, colorsTuple, createTheme, Loader, MantineProvider } from "@mantine/core";
 import { CircuitCarousel } from "./components/CircuitCarousel";
 import { NavBar } from "./components/NavBar";
+import { NotificationsBell } from "./components/NotificationsBell";
 import { GrandPrix } from "./types/GrandPrix";
 
 const SESSIONS_STORAGE_KEY = "sessions";
@@ -63,7 +64,10 @@ const App: React.FC = () => {
           <AppShell.Main>
             {loading
               ? <Center style={{ height: "60vh" }}><Loader size="xl" color="red" type="dots"/></Center>
-              : <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
+              : <>
+                <NotificationsBell nextGp={grandPrix[nextGpIndex]}/>
+                <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
+              </>
             }
           </AppShell.Main>
         </AppShell>

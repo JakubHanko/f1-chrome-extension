@@ -1,6 +1,6 @@
 import { Grid, GridCol, Text, ThemeIcon } from "@mantine/core";
 import { IconCheck, IconClock, IconFlag } from "@tabler/icons-react";
-import { GrandPrix } from "../types/GrandPrix";
+import { GrandPrix, getClassifiedSessions } from "../types/GrandPrix";
 import { Session, SessionState, getSessionDate } from "../types/Session";
 
 const Icon = ({ state }: { state: SessionState }) => {
@@ -56,29 +56,9 @@ const ListItem = ({ title, session, state }: ListItemProps) => {
   );
 };
 
-export function CircuitList({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean } ) {
-  const sessionArray: [string, Session?][] =
-    [
-      [ "FP1", gp.FirstPractice ],
-      [ "FP2", gp.SecondPractice ],
-      [ "FP3", gp.ThirdPractice ],
-      [ "SQ", gp.SprintQualifying ],
-      [ "SPR", gp.Sprint ],
-      [ "QUA", gp.Qualifying ],
-      [ "GP", { date: gp.date, time: gp.time } ]
-    ];
-
-  const currentDate = new Date();
-  const classifySession = (session: Session) => getSessionDate(session) < currentDate ? SessionState.PAST : SessionState.FUTURE;
-
-  const filteredSessions: [string, Session][] = sessionArray.filter(([ _, session ]) => session !== undefined) as [string, Session][];
-  const classifiedSessions = filteredSessions.map(([ title, session ]) => ({
-    title: title,
-    session: session,
-    state: classifySession(session)
-  }));
-
-  const nextRaceIndex = classifiedSessions.findIndex(({ state }) => isGpNext && state === SessionState.FUTURE);
+export function CircuitList({ gp, isNext }: { gp: GrandPrix, isNext: boolean } ) {
+  const classifiedSessions = getClassifiedSessions(gp);
+  const nextRaceIndex = classifiedSessions.findIndex(({ state }) => isNext && state === SessionState.FUTURE);
   if (nextRaceIndex !== -1) {
     classifiedSessions[nextRaceIndex].state = SessionState.NEXT;
   }

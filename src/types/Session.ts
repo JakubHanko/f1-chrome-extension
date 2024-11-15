@@ -9,4 +9,11 @@ export enum SessionState {
   FUTURE
 }
 
+export type AnnotatedSession = {
+  title: string;
+  session: Session;
+  state: SessionState;
+};
+
 export const getSessionDate = (session: Session) => new Date(`${session.date}T${session.time}`);
+export const classifySession = (session: Session) => getSessionDate(session) < new Date() ? SessionState.PAST : SessionState.FUTURE;
