@@ -65,7 +65,7 @@ const App: React.FC = () => {
             {loading
               ? <Center style={{ height: "60vh" }}><Loader size="xl" color="red" type="dots"/></Center>
               : <>
-                <NotificationsBell nextGp={grandPrix[nextGpIndex]}/>
+                { "storage" in chrome && <NotificationsBell nextGp={grandPrix[nextGpIndex]}/>}
                 <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
               </>
             }

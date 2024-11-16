@@ -1,26 +1,44 @@
 import { ActionIcon, Tooltip } from "@mantine/core";
 import { IconBell } from "@tabler/icons-react";
-import { useState } from "react";
-import { GrandPrix } from "../types/GrandPrix";
+import { useEffect, useState } from "react";
+import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
+import { AnnotatedSession, getSessionDate, SessionState } from "../types/Session";
 
 // const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
-const NOTIFICATION_ID = "f1-extension-notification";
 
 export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
   const [ isNotifying, setNotifying ] = useState(false);
-
-  // const nextSession = getClassifiedSessions(nextGp).find(({ state }) => state !== SessionState.PAST);
   console.log(nextGp);
 
-  const handleBellClick = () => {
-    if (isNotifying) {
-      //
+  const nextSession = getClassifiedSessions(nextGp).find(({ state }) => state !== SessionState.PAST) as AnnotatedSession;
+  const timeUntilSession = Math.floor(getSessionDate(nextSession.session).getTime() - new Date().getTime() / 60000);
+
+  useEffect(() => {
+    chrome.storage.sync.get("notificationBell", (result) => {
+      const isEnabled = result.notificationBell ?? false;
+      setNotifying(isEnabled);
+    });
+  }, []);
+
+  const handleBellClick = async () => {
+    const newState = !isNotifying;
+    setNotifying(newState);
+
+    if (newState) {
+      chrome.runtime.sendMessage(
+        {
+          type: "f1-event-notification",
+          raceName: nextGp.raceName,
+          sessionName: nextSession?.longName,
+          delay: timeUntilSession - 30
+        }
+      );
     } else {
-      //
+      chrome.runtime.sendMessage({ type: "clear" });
     }
-    setNotifying(!isNotifying);
+
+    chrome.storage.sync.set({ notificationBell: newState });
   };
-  console.log(isNotifying);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import { Grid, GridCol, Text, ThemeIcon } from "@mantine/core";
 import { IconCheck, IconClock, IconFlag } from "@tabler/icons-react";
 import { GrandPrix, getClassifiedSessions } from "../types/GrandPrix";
-import { Session, SessionState, getSessionDate } from "../types/Session";
+import { AnnotatedSession, SessionState, getSessionDate } from "../types/Session";
 
 const Icon = ({ state }: { state: SessionState }) => {
   if (state === SessionState.FUTURE) {
@@ -25,13 +25,7 @@ const Icon = ({ state }: { state: SessionState }) => {
   );
 };
 
-type ListItemProps = {
-  title: string;
-  session: Session;
-  state: SessionState
-};
-
-const ListItem = ({ title, session, state }: ListItemProps) => {
+const ListItem = ({ shortName, session, state }: AnnotatedSession) => {
   const sessionDate = getSessionDate(session);
   const day = sessionDate.toLocaleDateString(undefined, { weekday: "short" });
   const date = sessionDate.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
@@ -44,7 +38,7 @@ const ListItem = ({ title, session, state }: ListItemProps) => {
       </GridCol>
       <GridCol span={2}>
         <Text size="sm" c={state === SessionState.PAST ? "dimmed": "white"}>
-          {title}
+          {shortName}
         </Text>
       </GridCol>
       <GridCol span={7}>

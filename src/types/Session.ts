@@ -10,7 +10,8 @@ export enum SessionState {
 }
 
 export type AnnotatedSession = {
-  title: string;
+  shortName: string;
+  longName: string;
   session: Session;
   state: SessionState;
 };
