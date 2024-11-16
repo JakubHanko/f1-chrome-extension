@@ -7,17 +7,17 @@ export function NavBar({ nextGp }: { nextGp: GrandPrix }) {
   return (
     <AppShell.Header>
       <Flex
-        bg="f1-red"
+        className={styles.navbar}
         gap="xs"
         justify="center"
         align="center"
         direction="row"
         wrap="wrap"
       >
-        <Button className={styles.button} bg="f1-red" size="xl" radius="xs">
+        <Button className={styles.button} size="xl" radius="xs">
                 Calendar
         </Button>
-        <Button className={styles.button} bg="f1-red" size="xl" radius="xs">
+        <Button className={styles.button} size="xl" radius="xs">
                 Standings
         </Button>
         <Group justify="flex-end">

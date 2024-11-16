@@ -1,6 +1,7 @@
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import { Container, Divider, Paper } from "@mantine/core";
+import { IconChevronCompactLeft, IconChevronCompactRight } from "@tabler/icons-react";
 import { GrandPrix } from "../types/GrandPrix";
 import classes from "./CircuitCarousel.module.css";
 import { CircuitHeader } from "./CircuitHeader";
@@ -39,6 +40,8 @@ export function CircuitCarousel({ data, initialSlide }: {data: GrandPrix[], init
     <Carousel
       classNames={classes}
       initialSlide={initialSlide === -1 ? data.length : initialSlide}
+      previousControlIcon={<IconChevronCompactLeft className={classes.leftArrow} color="red"/>}
+      nextControlIcon={<IconChevronCompactRight className={classes.rightArrow} color="red"/>}
     >
       {slides}
     </Carousel>

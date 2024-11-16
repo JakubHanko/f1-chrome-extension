@@ -3,4 +3,44 @@
     opacity: 0;
     cursor: default;
   }
+  background-color: transparent;
+  border: none;
+  width: rem(50);
+}
+
+.control svg {
+  transform: scaleY(1.5);
+  position: relative;
+}
+
+.leftArrow {
+  animation: moveLeft 4s ease-in-out infinite; 
+}
+
+.rightArrow {
+  animation: moveRight 4s ease-in-out infinite; 
+}
+
+@keyframes moveLeft {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: -5px;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes moveRight {
+  0% {
+    left: 0;
+  }
+  50% {
+    left: 5px;
+  }
+  100% {
+    left: 0;
+  }
 }

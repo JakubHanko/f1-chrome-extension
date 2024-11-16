@@ -14,8 +14,7 @@ export function Flag({ location }: { location: Location }) {
 
   return (
     <>
-      <span className={`fi fi-${code.toLowerCase()}`}
-      />
+      <span className={`fi fi-${code.toLowerCase()}`}/>
     </>
   );
 }

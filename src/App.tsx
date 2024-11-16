@@ -12,7 +12,7 @@ const SESSIONS_STORAGE_KEY = "sessions";
 const theme = createTheme({
   fontFamily: "Rajdhani, sans-serif",
   colors: {
-    "f1-red": colorsTuple("#E00400"),
+    "f1red": colorsTuple("#E00400"),
     "black": colorsTuple("#15151E")
   },
 });
