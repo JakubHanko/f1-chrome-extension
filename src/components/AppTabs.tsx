@@ -1,7 +1,8 @@
-import { Center, Loader, Tabs } from "@mantine/core";
+import { Tabs } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
 import styles from "./AppTabs.module.css";
 import { CircuitCarousel } from "./CircuitCarousel";
+import { CustomLoader } from "./CustomLoader";
 import { NotificationsBell } from "./NotificationsBell";
 import { Standings } from "./Standings";
 
@@ -20,9 +21,7 @@ export const AppTabs = ({ grandPrix }: { grandPrix: GrandPrix[] }) => {
       </Tabs.List>
       {
         grandPrix.length === 0
-          ? <Center style={{ height: "60vh" }}>
-            <Loader size="xl" color="red" type="dots"/>
-          </Center>
+          ? <CustomLoader/>
           : <>
             <Tabs.Panel value="calendar">
               {
