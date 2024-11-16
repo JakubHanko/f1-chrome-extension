@@ -1,10 +1,8 @@
 import { ActionIcon, Tooltip } from "@mantine/core";
-import { IconBell } from "@tabler/icons-react";
+import { IconBell, IconBellOff } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
 import { AnnotatedSession, getSessionDate, SessionState } from "../types/Session";
-
-// const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 
 export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
   const [ isNotifying, setNotifying ] = useState(false);
@@ -42,14 +40,15 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
 
   return (
     <>
-      <Tooltip label={isNotifying ? "Notification scheduled" : "Notify me for the next F1 session"}>
+      <Tooltip label={isNotifying ? "Turn off notifications" : "Notify me for the next F1 session"}>
         <ActionIcon
-          color={isNotifying ? "red" : "gray"}
+          color={isNotifying ? "black" : "gray"}
           onClick={handleBellClick}
           variant="filled"
           size="lg"
+          radius="xl"
         >
-          <IconBell />
+          {isNotifying ? <IconBellOff/> : <IconBell />}
         </ActionIcon>
       </Tooltip>
     </>

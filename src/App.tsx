@@ -6,14 +6,13 @@ import "@mantine/core/styles.css";
 import { AppShell, Center, colorsTuple, createTheme, Loader, MantineProvider } from "@mantine/core";
 import { CircuitCarousel } from "./components/CircuitCarousel";
 import { NavBar } from "./components/NavBar";
-import { NotificationsBell } from "./components/NotificationsBell";
 import { GrandPrix } from "./types/GrandPrix";
 
 const SESSIONS_STORAGE_KEY = "sessions";
 const theme = createTheme({
   fontFamily: "Rajdhani, sans-serif",
   colors: {
-    "red": colorsTuple("#E00400"),
+    "f1-red": colorsTuple("#E00400"),
     "black": colorsTuple("#15151E")
   },
 });
@@ -60,14 +59,11 @@ const App: React.FC = () => {
           header={{ height: 60 }}
           padding="md"
         >
-          <NavBar/>
+          {!loading && <NavBar nextGp={grandPrix[nextGpIndex]}/>}
           <AppShell.Main>
             {loading
               ? <Center style={{ height: "60vh" }}><Loader size="xl" color="red" type="dots"/></Center>
-              : <>
-                { "storage" in chrome && <NotificationsBell nextGp={grandPrix[nextGpIndex]}/>}
-                <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
-              </>
+              : <CircuitCarousel data={grandPrix} initialSlide={nextGpIndex}/>
             }
           </AppShell.Main>
         </AppShell>

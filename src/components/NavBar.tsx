@@ -1,23 +1,28 @@
-import { AppShell, Button, Flex } from "@mantine/core";
+import { AppShell, Button, Flex, Group } from "@mantine/core";
+import { GrandPrix } from "../types/GrandPrix";
 import styles from "./NavBar.module.css";
+import { NotificationsBell } from "./NotificationsBell";
 
-export function NavBar() {
+export function NavBar({ nextGp }: { nextGp: GrandPrix }) {
   return (
     <AppShell.Header>
       <Flex
-        bg="red"
+        bg="f1-red"
         gap="xs"
-        justify="flex-start"
-        align="flex-start"
+        justify="center"
+        align="center"
         direction="row"
         wrap="wrap"
       >
-        <Button className={styles.button} bg="red" size="xl" radius="xs">
+        <Button className={styles.button} bg="f1-red" size="xl" radius="xs">
                 Calendar
         </Button>
-        <Button className={styles.button} bg="red" size="xl" radius="xs">
-                Lorem Ipsum
+        <Button className={styles.button} bg="f1-red" size="xl" radius="xs">
+                Standings
         </Button>
+        <Group justify="flex-end">
+          { "storage" in chrome && <NotificationsBell nextGp={nextGp}/>}
+        </Group>
       </Flex>
     </AppShell.Header>
   );
