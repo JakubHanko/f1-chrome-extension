@@ -21,12 +21,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
-    const storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
+    let storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
 
     const fetchData = async () => {
       let response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
       if (!response.ok) {
         response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear - 1}/races`);
+        storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear - 1}`;
       }
       const result = await response.json();
       localStorage.setItem(storageKey, JSON.stringify(result.MRData.RaceTable.Races));
