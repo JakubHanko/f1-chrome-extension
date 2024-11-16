@@ -3,10 +3,10 @@ import { IconBell, IconBellOff } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
 import { AnnotatedSession, getSessionDate, SessionState } from "../types/Session";
+import styles from "./NotificationsBell.module.css";
 
 export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
   const [ isNotifying, setNotifying ] = useState(false);
-  console.log(nextGp);
 
   const nextSession = getClassifiedSessions(nextGp).find(({ state }) => state !== SessionState.PAST) as AnnotatedSession;
   const timeUntilSession = Math.floor(getSessionDate(nextSession.session).getTime() - new Date().getTime() / 60000);
@@ -40,17 +40,19 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
 
   return (
     <>
-      <Tooltip label={isNotifying ? "Turn off notifications" : "Notify me for the next F1 session"}>
-        <ActionIcon
-          color={isNotifying ? "black" : "gray"}
-          onClick={handleBellClick}
-          variant="filled"
-          size="lg"
-          radius="xl"
-        >
-          {isNotifying ? <IconBellOff/> : <IconBell />}
-        </ActionIcon>
-      </Tooltip>
+      <div className={styles.container}>
+        <Tooltip label={isNotifying ? "Turn off notifications" : "Notify me for the next F1 session"}>
+          <ActionIcon
+            color={isNotifying ? "f1red" : "gray"}
+            onClick={handleBellClick}
+            variant="filled"
+            size="lg"
+            radius="xl"
+          >
+            {isNotifying ? <IconBellOff/> : <IconBell />}
+          </ActionIcon>
+        </Tooltip>
+      </div>
     </>
   );
 };
