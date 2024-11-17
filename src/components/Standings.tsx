@@ -27,13 +27,20 @@ export const Standings = () => {
     }).then((data) => setConstructorData(data));
   }, [ ]);
 
-
   return (
     <>
       <SegmentedControl
         data={options}
         onChange={setOption}
         color="f1red"
+        styles={{
+          root: {
+            width: "100%",
+            height: "100%",
+            border: "3px solid var(--mantine-color-black-0)",
+            borderRadius: "8px"
+          }
+        }}
       />
       {
         option === "Drivers"
