@@ -16,5 +16,5 @@ export type AnnotatedSession = {
   state: SessionState;
 };
 
-export const getSessionDate = (session: Session) => new Date(`${session.date}T${session.time}`);
-export const classifySession = (session: Session) => getSessionDate(session) < new Date() ? SessionState.PAST : SessionState.FUTURE;
+export const getSessionDate = (session: Session): Date => new Date(`${session.date}T${session.time}`);
+export const classifySession = (session: Session): SessionState => getSessionDate(session) < new Date() ? SessionState.PAST : SessionState.FUTURE;

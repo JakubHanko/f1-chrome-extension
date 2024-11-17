@@ -8,7 +8,7 @@ import { CircuitHeader } from "./CircuitHeader";
 import { CircuitList } from "./CircuitList";
 
 
-const CircuitCard = ({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) => {
+const CircuitCard = ({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }): JSX.Element => {
   return (
     <Paper
       shadow="xs"
@@ -29,7 +29,7 @@ const CircuitCard = ({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) => 
   );
 };
 
-export const CircuitCarousel = ({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) => {
+export const CircuitCarousel = ({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}): JSX.Element => {
   const slides = data?.map((gp, i) => (
     <Carousel.Slide key={i}>
       <CircuitCard gp={gp} isGpNext={i === initialSlide} />

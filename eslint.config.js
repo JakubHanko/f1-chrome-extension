@@ -42,6 +42,7 @@ export default tseslint.config(
       "brace-style": "off",
       "curly": [ "error", "all" ],
       "@typescript-eslint/no-unused-vars": "off", // checked by TSC
+      "@typescript-eslint/explicit-function-return-type": "error",
       "space-before-blocks": [ "error", "always" ],
       "padding-line-between-statements": [
         "error",

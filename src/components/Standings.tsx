@@ -7,7 +7,7 @@ import { StandingsTable } from "./StandingsTable";
 
 type Options = "Drivers" | "Constructors";
 
-export const Standings = () => {
+export const Standings = (): JSX.Element => {
   const [ option, setOption ] = useState("Drivers");
   const options: Options[] = [ "Drivers", "Constructors" ];
   const [ driverData, setDriverData ] = useState<DriverStanding[]>([]);

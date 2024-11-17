@@ -6,7 +6,7 @@ import { CustomLoader } from "./CustomLoader";
 import { NotificationsBell } from "./NotificationsBell";
 import { Standings } from "./Standings";
 
-export const AppTabs = ({ grandPrix }: { grandPrix: GrandPrix[] }) => {
+export const AppTabs = ({ grandPrix }: { grandPrix: GrandPrix[] }): JSX.Element => {
   const nextGpIndex = grandPrix.findIndex((gp) => new Date(gp.date).getTime() > new Date().getTime());
 
   return (

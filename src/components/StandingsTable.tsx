@@ -10,7 +10,7 @@ type StandingsTableProps = {
   data: TableDataType[];
 };
 
-export const StandingsTable = ({ header, data }: StandingsTableProps) => {
+export const StandingsTable = ({ header, data }: StandingsTableProps): JSX.Element => {
   const rowMapper = (row: TableDataType): string[] => {
     if ("Driver" in row) {
       return [ row.position, `${row.Driver.givenName} ${row.Driver.familyName}`, row.Constructors[0].name, row.points ];

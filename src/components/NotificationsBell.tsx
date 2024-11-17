@@ -5,7 +5,7 @@ import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
 import { AnnotatedSession, getSessionDate, SessionState } from "../types/Session";
 import styles from "./NotificationsBell.module.css";
 
-export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
+export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}): JSX.Element => {
   const [ isNotifying, setNotifying ] = useState(false);
 
   const nextSession = getClassifiedSessions(nextGp).find(({ state }) => state !== SessionState.PAST) as AnnotatedSession;
@@ -18,7 +18,7 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}) => {
     });
   }, []);
 
-  const handleBellClick = async () => {
+  const handleBellClick = (): void => {
     const newState = !isNotifying;
     setNotifying(newState);
 

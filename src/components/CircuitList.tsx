@@ -3,7 +3,7 @@ import { IconCheck, IconClock, IconFlag } from "@tabler/icons-react";
 import { GrandPrix, getClassifiedSessions } from "../types/GrandPrix";
 import { AnnotatedSession, SessionState, getSessionDate } from "../types/Session";
 
-const Icon = ({ state }: { state: SessionState }) => {
+const Icon = ({ state }: { state: SessionState }): JSX.Element => {
   if (state === SessionState.FUTURE) {
     return  (
       <ThemeIcon color="yellow" size={16} radius="xl">
@@ -25,7 +25,7 @@ const Icon = ({ state }: { state: SessionState }) => {
   );
 };
 
-const ListItem = ({ shortName, session, state }: AnnotatedSession) => {
+const ListItem = ({ shortName, session, state }: AnnotatedSession): JSX.Element => {
   const sessionDate = getSessionDate(session);
   const day = sessionDate.toLocaleDateString(undefined, { weekday: "short" });
   const date = sessionDate.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
@@ -50,7 +50,7 @@ const ListItem = ({ shortName, session, state }: AnnotatedSession) => {
   );
 };
 
-export const CircuitList = ({ gp, isNext }: { gp: GrandPrix, isNext: boolean }) => {
+export const CircuitList = ({ gp, isNext }: { gp: GrandPrix, isNext: boolean }): JSX.Element => {
   const classifiedSessions = getClassifiedSessions(gp);
   const nextRaceIndex = classifiedSessions.findIndex(({ state }) => isNext && state === SessionState.FUTURE);
   if (nextRaceIndex !== -1) {

@@ -15,7 +15,7 @@ const API_BASEPATH = "https://api.jolpi.ca/ergast/f1";
 export const fetchData = async <T extends ApiDataType>({ year, endpoint }: ApiDataProps): Promise<T[]> => {
   let storageKey = `${endpoint}_${year}`;
 
-  const makeApiCall = async () => {
+  const makeApiCall = async (): Promise<T[]> => {
     let response = await fetch(`${API_BASEPATH}/${year}/${endpoint}`);
     if (!response.ok) {
       response = await fetch(`${API_BASEPATH}/${year - 1}/${endpoint}`);
