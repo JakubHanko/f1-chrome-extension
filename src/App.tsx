@@ -11,13 +11,13 @@ import { fetchData } from "./utils/api";
 const theme = createTheme({
   fontFamily: "Rajdhani, sans-serif",
   colors: {
-    "f1red": colorsTuple("#E00400"),
-    "black": colorsTuple("#15151E")
-  },
+    f1red: colorsTuple("#E00400"),
+    black: colorsTuple("#15151E")
+  }
 });
 
 const App: React.FC = () => {
-  const [ grandPrix, setGrandPrix ] = useState<GrandPrix[]>([]);
+  const [grandPrix, setGrandPrix] = useState<GrandPrix[]>([]);
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -25,12 +25,15 @@ const App: React.FC = () => {
       year: currentYear,
       endpoint: "races"
     }).then((data) => setGrandPrix(data));
-  }, [ ]);
+  }, []);
 
   return (
     <>
-      <MantineProvider defaultColorScheme="dark" theme={theme}>
-        <AppTabs grandPrix={grandPrix}/>
+      <MantineProvider
+        defaultColorScheme="dark"
+        theme={theme}
+      >
+        <AppTabs grandPrix={grandPrix} />
       </MantineProvider>
     </>
   );

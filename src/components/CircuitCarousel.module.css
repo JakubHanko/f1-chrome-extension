@@ -14,11 +14,11 @@
 }
 
 .leftArrow {
-  animation: moveLeft 4s ease-in-out infinite; 
+  animation: moveLeft 4s ease-in-out infinite;
 }
 
 .rightArrow {
-  animation: moveRight 4s ease-in-out infinite; 
+  animation: moveRight 4s ease-in-out infinite;
 }
 
 @keyframes moveLeft {

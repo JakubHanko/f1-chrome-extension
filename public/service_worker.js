@@ -2,7 +2,8 @@ const NOTIFICATION_TYPE = "f1-event-notification";
 
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === NOTIFICATION_TYPE) {
-    chrome.storage.sync.get("alarmData")
+    chrome.storage.sync
+      .get("alarmData")
       .then(({ alarmData }) =>
         chrome.notifications.create({
           type: "basic",
@@ -12,7 +13,8 @@ chrome.alarms.onAlarm.addListener((alarm) => {
           priority: 2,
           requireInteraction: true
         })
-      ).then(() => {
+      )
+      .then(() => {
         chrome.storage.sync.clear();
         chrome.alarms.clearAll();
       });
@@ -21,11 +23,9 @@ chrome.alarms.onAlarm.addListener((alarm) => {
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === NOTIFICATION_TYPE) {
-    chrome.alarms.create(NOTIFICATION_TYPE,
-      {
-        delayInMinutes: message.delay,
-      }
-    );
+    chrome.alarms.create(NOTIFICATION_TYPE, {
+      delayInMinutes: message.delay
+    });
     chrome.storage.sync.set({
       alarmData: {
         raceName: message.raceName,

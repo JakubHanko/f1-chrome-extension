@@ -7,4 +7,3 @@ export interface ConstructorStanding {
   wins: string;
   Constructor: Constructor;
 }
-

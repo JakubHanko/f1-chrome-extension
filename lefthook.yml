@@ -10,6 +10,8 @@ pre-commit:
         - rebase
     typecheck:
       run: npm run typecheck
+    format:
+      run: npm run format {staged_files}
 
 pre-push:
   commands:

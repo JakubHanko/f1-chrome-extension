@@ -4,7 +4,7 @@ import "./Flag.css";
 
 export const Flag = ({ location }: { location: Location }): JSX.Element => {
   let code = getCode(location.country) || "";
-  if ([ "USA", "United States" ].includes(location.country)) {
+  if (["USA", "United States"].includes(location.country)) {
     code = "US";
   } else if (location.country === "UK") {
     code = "GB";
@@ -14,7 +14,7 @@ export const Flag = ({ location }: { location: Location }): JSX.Element => {
 
   return (
     <>
-      <span className={`fi fi-${code.toLowerCase()}`}/>
+      <span className={`fi fi-${code.toLowerCase()}`} />
     </>
   );
 };

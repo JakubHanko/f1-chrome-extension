@@ -18,19 +18,24 @@ export interface GrandPrix {
 }
 
 export const getClassifiedSessions = (gp: GrandPrix): AnnotatedSession[] => {
-  return ([
-    [ "FP1", "First Practice", gp.FirstPractice ],
-    [ "FP2", "Second Practice", gp.SecondPractice ],
-    [ "FP3", "Third Practice", gp.ThirdPractice ],
-    [ "SQ", "Sprint Qualification", gp.SprintQualifying ],
-    [ "SPR", "Sprint", gp.Sprint ],
-    [ "QUA", "Qualification", gp.Qualifying ],
-    [ "GP", "Grand Prix", { date: gp.date, time: gp.time } ]
-  ].filter(([ _, __, session ]) => session !== undefined) as [string, string, Session][])
-    .map(([ shortName, longName, session ]) => ({
-      shortName,
-      longName,
-      session,
-      state: classifySession(session)
-    }));
+  return (
+    [
+      ["FP1", "First Practice", gp.FirstPractice],
+      ["FP2", "Second Practice", gp.SecondPractice],
+      ["FP3", "Third Practice", gp.ThirdPractice],
+      ["SQ", "Sprint Qualification", gp.SprintQualifying],
+      ["SPR", "Sprint", gp.Sprint],
+      ["QUA", "Qualification", gp.Qualifying],
+      ["GP", "Grand Prix", { date: gp.date, time: gp.time }]
+    ].filter(([_, __, session]) => session !== undefined) as [
+      string,
+      string,
+      Session
+    ][]
+  ).map(([shortName, longName, session]) => ({
+    shortName,
+    longName,
+    session,
+    state: classifySession(session)
+  }));
 };

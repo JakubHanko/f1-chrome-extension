@@ -12,7 +12,10 @@ type ApiDataType = GrandPrix | DriverStanding | ConstructorStanding;
 const API_BASEPATH = "https://api.jolpi.ca/ergast/f1";
 
 // TODO: errors
-export const fetchData = async <T extends ApiDataType>({ year, endpoint }: ApiDataProps): Promise<T[]> => {
+export const fetchData = async <T extends ApiDataType>({
+  year,
+  endpoint
+}: ApiDataProps): Promise<T[]> => {
   let storageKey = `${endpoint}_${year}`;
 
   const makeApiCall = async (): Promise<T[]> => {
@@ -26,7 +29,9 @@ export const fetchData = async <T extends ApiDataType>({ year, endpoint }: ApiDa
       return result.MRData.RaceTable.Races;
     }
     const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
-    const standingsKey = Object.keys(standingsObject).find((key) => key.toLowerCase().endsWith("standings")) as string;
+    const standingsKey = Object.keys(standingsObject).find((key) =>
+      key.toLowerCase().endsWith("standings")
+    ) as string;
 
     return standingsObject[standingsKey];
   };

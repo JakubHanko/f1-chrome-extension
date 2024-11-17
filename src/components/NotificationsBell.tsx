@@ -2,14 +2,26 @@ import { ActionIcon, Tooltip } from "@mantine/core";
 import { IconBell, IconBellOff } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
-import { AnnotatedSession, getSessionDate, SessionState } from "../types/Session";
+import {
+  AnnotatedSession,
+  getSessionDate,
+  SessionState
+} from "../types/Session";
 import styles from "./NotificationsBell.module.css";
 
-export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}): JSX.Element => {
-  const [ isNotifying, setNotifying ] = useState(false);
+export const NotificationsBell = ({
+  nextGp
+}: {
+  nextGp: GrandPrix;
+}): JSX.Element => {
+  const [isNotifying, setNotifying] = useState(false);
 
-  const nextSession = getClassifiedSessions(nextGp).find(({ state }) => state !== SessionState.PAST) as AnnotatedSession;
-  const timeUntilSession = Math.floor(getSessionDate(nextSession.session).getTime() - new Date().getTime() / 60000);
+  const nextSession = getClassifiedSessions(nextGp).find(
+    ({ state }) => state !== SessionState.PAST
+  ) as AnnotatedSession;
+  const timeUntilSession = Math.floor(
+    getSessionDate(nextSession.session).getTime() - new Date().getTime() / 60000
+  );
 
   useEffect(() => {
     chrome.storage.sync.get("notificationBell", (result) => {
@@ -23,14 +35,12 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}): JSX.Element
     setNotifying(newState);
 
     if (newState) {
-      chrome.runtime.sendMessage(
-        {
-          type: "f1-event-notification",
-          raceName: nextGp.raceName,
-          sessionName: nextSession?.longName,
-          delay: timeUntilSession - 30
-        }
-      );
+      chrome.runtime.sendMessage({
+        type: "f1-event-notification",
+        raceName: nextGp.raceName,
+        sessionName: nextSession?.longName,
+        delay: timeUntilSession - 30
+      });
     } else {
       chrome.runtime.sendMessage({ type: "clear" });
     }
@@ -41,7 +51,13 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}): JSX.Element
   return (
     <>
       <div className={styles.container}>
-        <Tooltip label={isNotifying ? "Turn off notifications" : "Notify me for the next F1 session"}>
+        <Tooltip
+          label={
+            isNotifying
+              ? "Turn off notifications"
+              : "Notify me for the next F1 session"
+          }
+        >
           <ActionIcon
             color={isNotifying ? "f1red" : "gray"}
             onClick={handleBellClick}
@@ -49,7 +65,7 @@ export const NotificationsBell = ({ nextGp }: { nextGp: GrandPrix}): JSX.Element
             size="lg"
             radius="xl"
           >
-            {isNotifying ? <IconBellOff/> : <IconBell />}
+            {isNotifying ? <IconBellOff /> : <IconBell />}
           </ActionIcon>
         </Tooltip>
       </div>

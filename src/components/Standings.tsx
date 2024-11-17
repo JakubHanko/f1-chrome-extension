@@ -8,10 +8,12 @@ import { StandingsTable } from "./StandingsTable";
 type Options = "Drivers" | "Constructors";
 
 export const Standings = (): JSX.Element => {
-  const [ option, setOption ] = useState("Drivers");
-  const options: Options[] = [ "Drivers", "Constructors" ];
-  const [ driverData, setDriverData ] = useState<DriverStanding[]>([]);
-  const [ constructorData, setConstructorData ] = useState<ConstructorStanding[]>([]);
+  const [option, setOption] = useState("Drivers");
+  const options: Options[] = ["Drivers", "Constructors"];
+  const [driverData, setDriverData] = useState<DriverStanding[]>([]);
+  const [constructorData, setConstructorData] = useState<ConstructorStanding[]>(
+    []
+  );
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
@@ -25,7 +27,7 @@ export const Standings = (): JSX.Element => {
       year: currentYear,
       endpoint: "constructorstandings"
     }).then((data) => setConstructorData(data));
-  }, [ ]);
+  }, []);
 
   return (
     <>
@@ -37,21 +39,22 @@ export const Standings = (): JSX.Element => {
           root: {
             width: "100%",
             height: "100%",
-            border: "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
+            border:
+              "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
           }
         }}
       />
-      {
-        option === "Drivers"
-          ? <StandingsTable
-            header={[ "Pos", "Driver", "Car", "Pts" ]}
-            data={driverData}
-          />
-          : <StandingsTable
-            header={[ "Pos", "Team", "Pts" ]}
-            data={constructorData}
-          />
-      }
+      {option === "Drivers" ? (
+        <StandingsTable
+          header={["Pos", "Driver", "Car", "Pts"]}
+          data={driverData}
+        />
+      ) : (
+        <StandingsTable
+          header={["Pos", "Team", "Pts"]}
+          data={constructorData}
+        />
+      )}
     </>
   );
 };
