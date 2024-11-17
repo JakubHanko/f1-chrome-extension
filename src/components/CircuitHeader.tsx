@@ -2,7 +2,7 @@ import { Grid, Stack, Text } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
 import { Flag } from "./Flag";
 
-export function CircuitHeader({ gp }: { gp: GrandPrix }) {
+export const CircuitHeader = ({ gp }: { gp: GrandPrix }) => {
   return (
     <>
       <Grid pb="xs">
@@ -22,4 +22,4 @@ export function CircuitHeader({ gp }: { gp: GrandPrix }) {
       </Grid>
     </>
   );
-}
+};

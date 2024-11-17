@@ -8,7 +8,7 @@ import { CircuitHeader } from "./CircuitHeader";
 import { CircuitList } from "./CircuitList";
 
 
-function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
+const CircuitCard = ({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) => {
   return (
     <Paper
       shadow="xs"
@@ -27,9 +27,9 @@ function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
       </Container>
     </Paper>
   );
-}
+};
 
-export function CircuitCarousel({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) {
+export const CircuitCarousel = ({ data, initialSlide }: {data: GrandPrix[], initialSlide: number}) => {
   const slides = data?.map((gp, i) => (
     <Carousel.Slide key={i}>
       <CircuitCard gp={gp} isGpNext={i === initialSlide} />
@@ -46,4 +46,4 @@ export function CircuitCarousel({ data, initialSlide }: {data: GrandPrix[], init
       {slides}
     </Carousel>
   );
-}
+};

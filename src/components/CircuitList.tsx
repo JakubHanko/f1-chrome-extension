@@ -50,7 +50,7 @@ const ListItem = ({ shortName, session, state }: AnnotatedSession) => {
   );
 };
 
-export function CircuitList({ gp, isNext }: { gp: GrandPrix, isNext: boolean } ) {
+export const CircuitList = ({ gp, isNext }: { gp: GrandPrix, isNext: boolean }) => {
   const classifiedSessions = getClassifiedSessions(gp);
   const nextRaceIndex = classifiedSessions.findIndex(({ state }) => isNext && state === SessionState.FUTURE);
   if (nextRaceIndex !== -1) {
@@ -66,4 +66,4 @@ export function CircuitList({ gp, isNext }: { gp: GrandPrix, isNext: boolean } )
       {...classifiedSessions.map((el) => <ListItem {...el}/>)}
     </Grid>
   );
-}
+};
