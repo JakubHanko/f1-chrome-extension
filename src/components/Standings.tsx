@@ -37,8 +37,7 @@ export const Standings = () => {
           root: {
             width: "100%",
             height: "100%",
-            border: "3px solid var(--mantine-color-black-0)",
-            borderRadius: "8px"
+            border: "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
           }
         }}
       />

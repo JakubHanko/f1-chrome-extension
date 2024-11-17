@@ -13,11 +13,11 @@ function CircuitCard({ gp, isGpNext }: { gp: GrandPrix, isGpNext: boolean }) {
     <Paper
       shadow="xs"
       p="xl"
-      radius="md"
       withBorder
       style={{
         background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
         color: "white",
+        borderRadius: "0 0 8px 8px"
       }}
     >
       <Container p="xl">

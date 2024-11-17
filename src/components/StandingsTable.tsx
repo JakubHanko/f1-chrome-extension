@@ -27,7 +27,7 @@ export const StandingsTable = ({ header, data }: StandingsTableProps) => {
         style={{
           background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
           color: "white",
-          borderRadius: "8px",
+          borderRadius: "0 0 8px 8px",
           border: "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
         }}
         p="md"
