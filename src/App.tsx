@@ -6,8 +6,8 @@ import "@mantine/core/styles.css";
 import { colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import { AppTabs } from "./components/AppTabs";
 import { GrandPrix } from "./types/GrandPrix";
+import { fetchData } from "./utils/api";
 
-const SESSIONS_STORAGE_KEY = "sessions";
 const theme = createTheme({
   fontFamily: "Rajdhani, sans-serif",
   colors: {
@@ -21,27 +21,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
-    let storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear}`;
-
-    const fetchData = async () => {
-      let response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear}/races`);
-      if (!response.ok) {
-        response = await fetch(`https://api.jolpi.ca/ergast/f1/${currentYear - 1}/races`);
-        storageKey = `${SESSIONS_STORAGE_KEY}_${currentYear - 1}`;
-      }
-      const result = await response.json();
-      localStorage.setItem(storageKey, JSON.stringify(result.MRData.RaceTable.Races));
-
-      setGrandPrix(result.MRData.RaceTable.Races);
-    };
-
-    const cachedData = localStorage.getItem(storageKey);
-    if (cachedData) {
-      setGrandPrix(JSON.parse(cachedData));
-
-      return;
-    }
-    fetchData();
+    fetchData<GrandPrix>({
+      year: currentYear,
+      endpoint: "races"
+    }).then((data) => setGrandPrix(data));
   }, [ ]);
 
   return (

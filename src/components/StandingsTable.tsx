@@ -1,5 +1,4 @@
 import { Table } from "@mantine/core";
-import { useEffect, useState } from "react";
 import { ConstructorStanding } from "../types/ConstructorStanding";
 import { DriverStanding } from "../types/DriverStanding";
 import { CustomLoader } from "./CustomLoader";
@@ -8,41 +7,10 @@ type TableDataType = DriverStanding | ConstructorStanding;
 
 type StandingsTableProps = {
   header: string[];
-  year: number;
-  endpoint: string;
+  data: TableDataType[];
 };
 
-export const StandingsTable = ({ header, year, endpoint }: StandingsTableProps) => {
-  const [ data, setData ] = useState<TableDataType[]>([]);
-
-  // TODO make the logic below generic even for sessions
-  useEffect(() => {
-    let storageKey = `${endpoint}_${year}`;
-
-    const fetchData = async () => {
-      let response = await fetch(`https://api.jolpi.ca/ergast/f1/${year}/${endpoint}`);
-      if (!response.ok) {
-        response = await fetch(`https://api.jolpi.ca/ergast/f1/${year - 1}/${endpoint}`);
-        storageKey = `${endpoint}_${year - 1}`;
-      }
-      const result = await response.json();
-      const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
-      const standingsKey = Object.keys(standingsObject).find((key) => key.toLowerCase().endsWith("standings")) as string;
-
-      localStorage.setItem(storageKey, JSON.stringify(standingsObject[standingsKey]));
-
-      setData(standingsObject[standingsKey]);
-    };
-
-    const cachedData = localStorage.getItem(storageKey);
-    if (cachedData) {
-      setData(JSON.parse(cachedData));
-
-      return;
-    }
-    fetchData();
-  }, [ endpoint, year ]);
-
+export const StandingsTable = ({ header, data }: StandingsTableProps) => {
   const rowMapper = (row: TableDataType): string[] => {
     if ("Driver" in row) {
       return [ row.position, `${row.Driver.givenName} ${row.Driver.familyName}`, row.Constructors[0].name, row.points ];

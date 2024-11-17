@@ -1,15 +1,33 @@
 import { SegmentedControl } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ConstructorStanding } from "../types/ConstructorStanding";
+import { DriverStanding } from "../types/DriverStanding";
+import { fetchData } from "../utils/api";
 import { StandingsTable } from "./StandingsTable";
 
 type Options = "Drivers" | "Constructors";
 
 export const Standings = () => {
-  const currentYear = new Date().getFullYear();
   const [ option, setOption ] = useState("Drivers");
   const options: Options[] = [ "Drivers", "Constructors" ];
+  const [ driverData, setDriverData ] = useState<DriverStanding[]>([]);
+  const [ constructorData, setConstructorData ] = useState<ConstructorStanding[]>([]);
 
-  // TODO: move the API communication to here
+  useEffect(() => {
+    const currentYear = new Date().getFullYear();
+
+    fetchData<DriverStanding>({
+      year: currentYear,
+      endpoint: "driverstandings"
+    }).then((data) => setDriverData(data));
+
+    fetchData<ConstructorStanding>({
+      year: currentYear,
+      endpoint: "constructorstandings"
+    }).then((data) => setConstructorData(data));
+  }, [ ]);
+
+
   return (
     <>
       <SegmentedControl
@@ -21,13 +39,11 @@ export const Standings = () => {
         option === "Drivers"
           ? <StandingsTable
             header={[ "Pos", "Driver", "Car", "Pts" ]}
-            year={currentYear}
-            endpoint="driverstandings"
+            data={driverData}
           />
           : <StandingsTable
             header={[ "Pos", "Team", "Pts" ]}
-            year={currentYear}
-            endpoint="constructorstandings"
+            data={constructorData}
           />
       }
     </>
