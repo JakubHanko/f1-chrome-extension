@@ -42,16 +42,16 @@ export const StandingsTable = ({ header, data }: StandingsTableProps): JSX.Eleme
               <Table.Thead>
                 <Table.Tr>
             {
-              ...header.map((h) => <Table.Th tt={"uppercase"}>{h}</Table.Th>)
+              ...header.map((h, i) => <Table.Th key={i} tt={"uppercase"}>{h}</Table.Th>)
             }
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody>
             {
-              ...data.map((row) =>
-                <Table.Tr>
+              ...data.map((row, i) =>
+                <Table.Tr key={i}>
                   {
-                    ...rowMapper(row).map((col) => <Table.Td>{col}</Table.Td>)
+                    ...rowMapper(row).map((col, j) => <Table.Td key={j}>{col}</Table.Td>)
                   }
                 </Table.Tr>)
             }

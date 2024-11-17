@@ -63,7 +63,7 @@ export const CircuitList = ({ gp, isNext }: { gp: GrandPrix, isNext: boolean }):
       align="center"
       gutter="xs"
     >
-      {...classifiedSessions.map((el) => <ListItem {...el}/>)}
+      {...classifiedSessions.map((el, i) => <ListItem key={i} {...el}/>)}
     </Grid>
   );
 };

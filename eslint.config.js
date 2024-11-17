@@ -1,6 +1,7 @@
 import js from "@eslint/js";
 import stylisticTs from "@stylistic/eslint-plugin-ts";
 import importPlugin from "eslint-plugin-import";
+import reactPlugin from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
@@ -9,7 +10,13 @@ import tseslint from "typescript-eslint";
 export default tseslint.config(
   { ignores: [ "dist" ] },
   {
-    extends: [ js.configs.recommended, ...tseslint.configs.recommended, importPlugin.flatConfigs.recommended ],
+    extends: [
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+      importPlugin.flatConfigs.recommended,
+      reactPlugin.configs.flat.recommended,
+      reactPlugin.configs.flat["jsx-runtime"]
+    ],
     files: [ "**/*.{js,ts,tsx}" ],
     languageOptions: {
       ecmaVersion: 2020,
@@ -68,6 +75,9 @@ export default tseslint.config(
         "typescript": true,
         "node": true,
       },
+      "react": {
+        "version": "detect"
+      }
     },
   },
 );
