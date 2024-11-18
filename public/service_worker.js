@@ -7,7 +7,7 @@ chrome.alarms.onAlarm.addListener((alarm) => {
       .then(({ alarmData }) =>
         chrome.notifications.create({
           type: "basic",
-          iconUrl: "icon.png", // TODO
+          iconUrl: "icon.png",
           title: alarmData.raceName,
           message: `${alarmData.sessionName} starts in 30 minutes!`,
           priority: 2,
