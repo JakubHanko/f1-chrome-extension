@@ -20,7 +20,8 @@ export const NotificationsBell = ({
     ({ state }) => state !== SessionState.PAST
   ) as AnnotatedSession;
   const timeUntilSession = Math.floor(
-    getSessionDate(nextSession.session).getTime() - new Date().getTime() / 60000
+    (getSessionDate(nextSession.session).getTime() - new Date().getTime()) /
+      60000
   );
 
   useEffect(() => {
@@ -39,6 +40,7 @@ export const NotificationsBell = ({
         type: "f1-event-notification",
         raceName: nextGp.raceName,
         sessionName: nextSession?.longName,
+        sessionTime: getSessionDate(nextSession.session).getTime(),
         delay: timeUntilSession - 30
       });
     } else {

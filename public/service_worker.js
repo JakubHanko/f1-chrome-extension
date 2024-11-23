@@ -1,5 +1,17 @@
 const NOTIFICATION_TYPE = "f1-event-notification";
 
+const getAlarmMessage = (sessionTime, sessionName) => {
+  const now = new Date().getTime();
+
+  if (now > sessionTime) {
+    return `${sessionName} has already started!`;
+  }
+
+  const minutesUntilSession = Math.floor((sessionName - now) / 60000);
+
+  return `${sessionName} starts in ${minutesUntilSession} minute${minutesUntilSession == 1 ? "" : "s"}!`;
+};
+
 chrome.alarms.onAlarm.addListener((alarm) => {
   if (alarm.name === NOTIFICATION_TYPE) {
     chrome.storage.sync
@@ -9,7 +21,10 @@ chrome.alarms.onAlarm.addListener((alarm) => {
           type: "basic",
           iconUrl: "icon.png",
           title: alarmData.raceName,
-          message: `${alarmData.sessionName} starts in 30 minutes!`,
+          message: getAlarmMessage(
+            alarmData.sessionTime,
+            alarmData.sessionName
+          ),
           priority: 2,
           requireInteraction: true
         })
@@ -29,7 +44,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     chrome.storage.sync.set({
       alarmData: {
         raceName: message.raceName,
-        sessionName: message.sessionName
+        sessionName: message.sessionName,
+        sessionTime: message.sessionTime
       }
     });
   } else if (message.type === "clear") {
