@@ -17,17 +17,17 @@ export const Standings = (): JSX.Element => {
   );
 
   useEffect(() => {
-    const currentYear = new Date().getFullYear();
-
     fetchData<DriverStanding>({
-      year: currentYear,
       endpoint: Endpoint.DriverStandings
-    }).then((data) => setDriverData(data));
+    })
+      .then((data) => setDriverData(data))
+      .catch((error) => console.error(error));
 
     fetchData<ConstructorStanding>({
-      year: currentYear,
       endpoint: Endpoint.ConstructorStandings
-    }).then((data) => setConstructorData(data));
+    })
+      .then((data) => setConstructorData(data))
+      .catch((error) => console.error(error));
   }, []);
 
   return (

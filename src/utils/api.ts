@@ -4,7 +4,6 @@ import { Endpoint } from "../types/Endpoint";
 import { GrandPrix } from "../types/GrandPrix";
 
 type ApiDataProps = {
-  year: number;
   endpoint: Endpoint;
 };
 
@@ -31,27 +30,45 @@ const isCacheExpired = (endpoint: Endpoint): boolean => {
 
 // TODO: errors
 export const fetchData = async <T extends ApiDataType>({
-  year,
   endpoint
 }: ApiDataProps): Promise<T[]> => {
+  const year = new Date().getFullYear();
   let storageKey = `${endpoint}_${year}`;
 
   const makeApiCall = async (): Promise<T[]> => {
-    let response = await fetch(`${API_BASEPATH}/${year}/${endpoint}`);
-    if (!response.ok) {
-      response = await fetch(`${API_BASEPATH}/${year - 1}/${endpoint}`);
-      storageKey = `${endpoint}_${year - 1}`;
-    }
-    const result = await response.json();
-    if ("RaceTable" in result.MRData) {
-      return result.MRData.RaceTable.Races;
-    }
-    const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
-    const standingsKey = Object.keys(standingsObject).find((key) =>
-      key.toLowerCase().endsWith("standings")
-    ) as string;
+    return fetch(`${API_BASEPATH}/${year}/${endpoint}`)
+      .then((response) => {
+        if (!response.ok) {
+          // Retry with year - 1 if the first request fails
+          storageKey = `${endpoint}_${year - 1}`;
 
-    return standingsObject[standingsKey];
+          return fetch(`${API_BASEPATH}/${year - 1}/${endpoint}`);
+        }
+
+        return response;
+      })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Both API requests failed");
+        }
+
+        return response.json();
+      })
+      .then((result) => {
+        if ("RaceTable" in result.MRData) {
+          return result.MRData.RaceTable.Races;
+        }
+        const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
+        const standingsKey = Object.keys(standingsObject).find((key) =>
+          key.toLowerCase().endsWith("standings")
+        ) as string;
+
+        return standingsObject[standingsKey];
+      })
+      .catch((error) => {
+        console.error("API call failed:", error);
+        throw error;
+      });
   };
 
   const cachedData = localStorage.getItem(storageKey);

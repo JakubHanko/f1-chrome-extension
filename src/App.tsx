@@ -21,11 +21,11 @@ const App: React.FC = () => {
   const [grandPrix, setGrandPrix] = useState<GrandPrix[]>([]);
 
   useEffect(() => {
-    const currentYear = new Date().getFullYear();
     fetchData<GrandPrix>({
-      year: currentYear,
       endpoint: Endpoint.Races
-    }).then((data) => setGrandPrix(data));
+    })
+      .then((data) => setGrandPrix(data))
+      .catch((error) => console.error(error));
   }, []);
 
   return (
