@@ -28,7 +28,6 @@ const isCacheExpired = (endpoint: Endpoint): boolean => {
   return Date.now() - parseInt(lastUpdate) < 30 * MINUTE_IN_MS;
 };
 
-// TODO: errors
 export const fetchData = async <T extends ApiDataType>({
   endpoint
 }: ApiDataProps): Promise<T[]> => {
