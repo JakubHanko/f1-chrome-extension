@@ -1,4 +1,4 @@
-# F1 Google Chrome Extension 
+# F1 Google Chrome Extension
 
 This project is a Google Chrome extension that provides users with the Formula 1 calendar and up-to-date driver and constructor standings.
 
@@ -19,6 +19,7 @@ npm run build
 ```
 
 3. Load the extension in Chrome:
+
 - Open Chrome and go to `chrome://extensions/`.
 - Enable **Developer Mode** (toggle it in the top-right corner).
 - Click **Load unpacked** and select the project directory.
@@ -34,7 +35,7 @@ npm run build
 
 ## API Integration
 
-The extension fetches live data using the **jolpica-f1 API**. 
+The extension fetches live data using the **jolpica-f1 API**.
 
 ## License
 
