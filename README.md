@@ -48,8 +48,6 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 ## Screenshots
 
-<img src="docs/calendar.png" alt="Calendar" width="35%">
+![Calendar](docs/calendar.png)
 
----
-
-<img src="docs/standings.png" alt="Standings" width="35%">
+![Standings](docs/standings.png)
