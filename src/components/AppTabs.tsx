@@ -12,7 +12,7 @@ export const AppTabs = ({
   grandPrix: GrandPrix[];
 }): JSX.Element => {
   const nextGpIndex = grandPrix.findIndex(
-    (gp) => new Date(gp.date).getTime() > new Date().getTime()
+    (gp) => new Date(gp.date).getTime() > Date.now()
   );
 
   return (

@@ -5,6 +5,7 @@ import "@mantine/core/styles.css";
 
 import { colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import { AppTabs } from "./components/AppTabs";
+import { Endpoint } from "./types/Endpoint";
 import { GrandPrix } from "./types/GrandPrix";
 import { fetchData } from "./utils/api";
 
@@ -23,7 +24,7 @@ const App: React.FC = () => {
     const currentYear = new Date().getFullYear();
     fetchData<GrandPrix>({
       year: currentYear,
-      endpoint: "races"
+      endpoint: Endpoint.Races
     }).then((data) => setGrandPrix(data));
   }, []);
 

@@ -1,13 +1,11 @@
 const NOTIFICATION_TYPE = "f1-event-notification";
 
 const getAlarmMessage = (sessionTime, sessionName) => {
-  const now = new Date().getTime();
-
-  if (now > sessionTime) {
+  if (Date.now() > sessionTime) {
     return `${sessionName} has already started!`;
   }
 
-  const minutesUntilSession = Math.floor((sessionName - now) / 60000);
+  const minutesUntilSession = Math.floor((sessionName - Date.now()) / 60000);
 
   return `${sessionName} starts in ${minutesUntilSession} minute${minutesUntilSession == 1 ? "" : "s"}!`;
 };

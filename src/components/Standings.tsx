@@ -2,6 +2,7 @@ import { SegmentedControl } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { ConstructorStanding } from "../types/ConstructorStanding";
 import { DriverStanding } from "../types/DriverStanding";
+import { Endpoint } from "../types/Endpoint";
 import { fetchData } from "../utils/api";
 import { StandingsTable } from "./StandingsTable";
 
@@ -20,12 +21,12 @@ export const Standings = (): JSX.Element => {
 
     fetchData<DriverStanding>({
       year: currentYear,
-      endpoint: "driverstandings"
+      endpoint: Endpoint.DriverStandings
     }).then((data) => setDriverData(data));
 
     fetchData<ConstructorStanding>({
       year: currentYear,
-      endpoint: "constructorstandings"
+      endpoint: Endpoint.ConstructorStandings
     }).then((data) => setConstructorData(data));
   }, []);
 

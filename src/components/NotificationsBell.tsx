@@ -20,8 +20,7 @@ export const NotificationsBell = ({
     ({ state }) => state !== SessionState.PAST
   ) as AnnotatedSession;
   const timeUntilSession = Math.floor(
-    (getSessionDate(nextSession.session).getTime() - new Date().getTime()) /
-      60000
+    (getSessionDate(nextSession.session).getTime() - Date.now()) / 60000
   );
 
   useEffect(() => {
