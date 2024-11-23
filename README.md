@@ -35,7 +35,7 @@ npm run build
 
 ## API Integration
 
-The extension fetches live data using the **jolpica-f1 API**.
+The extension fetches live data using the [jolpica-f1 API](https://github.com/jolpica/jolpica-f1).
 
 ## License
 
