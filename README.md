@@ -1,50 +1,50 @@
-# React + TypeScript + Vite
+# F1 Google Chrome Extension 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a Google Chrome extension that provides users with the Formula 1 calendar and up-to-date driver and constructor standings.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. Download or Clone the project:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ["./tsconfig.node.json", "./tsconfig.app.json"],
-      tsconfigRootDir: import.meta.dirname
-    }
-  }
-});
+```bash
+git clone git@github.com:JakubHanko/f1-chrome-extension.git
+cd f1-chrome-extension
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. Install and build the project:
 
-```js
-// eslint.config.js
-import react from "eslint-plugin-react";
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: "18.3" } },
-  plugins: {
-    // Add the react plugin
-    react
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs["jsx-runtime"].rules
-  }
-});
+```bash
+npm install
+npm run build
 ```
+
+3. Load the extension in Chrome:
+- Open Chrome and go to `chrome://extensions/`.
+- Enable **Developer Mode** (toggle it in the top-right corner).
+- Click **Load unpacked** and select the project directory.
+
+4. The extension will now appear in your Chrome toolbar.
+
+## Usage
+
+1. Click on the F1 logo in your Chrome toolbar.
+2. Browse the race calendar to see the upcoming races.
+3. Navigate to the standings tab to view the latest rankings for drivers and constructors.
+4. Enjoy staying up-to-date with F1 directly from your browser!
+
+## API Integration
+
+The extension fetches live data using the **jolpica-f1 API**. 
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.
+
+## Acknowledgments
+
+- **Formula 1®**: All rights reserved by Formula One World Championship Limited. This extension is a fan project and not affiliated with Formula 1.
+- **jolpica-f1 API**: For providing live F1 data.
+
+## Screenshots
+
+TODO
