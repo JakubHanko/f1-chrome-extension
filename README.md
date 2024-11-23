@@ -45,6 +45,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 
 - **Formula 1®**: All rights reserved by Formula One World Championship Limited. This extension is a fan project and not affiliated with Formula 1.
 - **jolpica-f1 API**: For providing live F1 data.
+- **Freepik - Flaticon**: For icon used in this project. See [here](https://www.flaticon.com/free-icons/car) for more.
 
 ## Screenshots
 
