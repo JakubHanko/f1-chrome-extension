@@ -1,10 +1,17 @@
 import { Grid, GridCol, Text, ThemeIcon } from "@mantine/core";
-import { IconCheck, IconClock, IconFlag } from "@tabler/icons-react";
+import {
+  IconCheck,
+  IconClock,
+  IconFlag,
+  IconPlayerPlay
+} from "@tabler/icons-react";
 import { GrandPrix, getClassifiedSessions } from "../types/GrandPrix";
 import {
   AnnotatedSession,
+  SessionAnnotations,
   SessionState,
-  getSessionDate
+  getSessionDate,
+  getSessionLength
 } from "../types/Session";
 
 const Icon = ({ state }: { state: SessionState }): JSX.Element => {
@@ -28,6 +35,16 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
         <IconFlag size={10} />
       </ThemeIcon>
     );
+  } else if (state === SessionState.IN_PROGRESS) {
+    return (
+      <ThemeIcon
+        color="red"
+        size={16}
+        radius="xl"
+      >
+        <IconPlayerPlay size={10} />
+      </ThemeIcon>
+    );
   }
 
   return (
@@ -42,7 +59,7 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
 };
 
 const ListItem = ({
-  shortName,
+  annotation,
   session,
   state
 }: AnnotatedSession): JSX.Element => {
@@ -72,7 +89,7 @@ const ListItem = ({
           size="sm"
           c={state === SessionState.PAST ? "dimmed" : "white"}
         >
-          {shortName}
+          {SessionAnnotations[annotation].shortName}
         </Text>
       </GridCol>
       <GridCol span={7}>
@@ -97,6 +114,16 @@ export const CircuitList = ({
   );
   if (nextRaceIndex !== -1) {
     classifiedSessions[nextRaceIndex].state = SessionState.NEXT;
+
+    const nextSession = classifiedSessions[nextRaceIndex];
+    const nextSessionTime = getSessionDate(nextSession.session).getTime();
+
+    if (
+      Date.now() > nextSessionTime &&
+      Date.now() < nextSessionTime + getSessionLength(nextSession.annotation)
+    ) {
+      classifiedSessions[nextRaceIndex].state = SessionState.IN_PROGRESS;
+    }
   }
 
   return (

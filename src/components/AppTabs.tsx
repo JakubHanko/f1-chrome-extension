@@ -1,5 +1,6 @@
 import { Tabs } from "@mantine/core";
 import { GrandPrix } from "../types/GrandPrix";
+import { getSessionLength, SessionAnnotationType } from "../types/Session";
 import styles from "./AppTabs.module.css";
 import { CircuitCarousel } from "./CircuitCarousel";
 import { CustomLoader } from "./CustomLoader";
@@ -12,7 +13,10 @@ export const AppTabs = ({
   grandPrix: GrandPrix[];
 }): JSX.Element => {
   const nextGpIndex = grandPrix.findIndex(
-    (gp) => new Date(gp.date).getTime() > Date.now()
+    (gp) =>
+      new Date(gp.date).getTime() +
+        getSessionLength(SessionAnnotationType.GrandPrix) >
+      Date.now()
   );
 
   return (

@@ -5,6 +5,7 @@ import { getClassifiedSessions, GrandPrix } from "../types/GrandPrix";
 import {
   AnnotatedSession,
   getSessionDate,
+  SessionAnnotations,
   SessionState
 } from "../types/Session";
 import styles from "./NotificationsBell.module.css";
@@ -31,14 +32,14 @@ export const NotificationsBell = ({
   }, []);
 
   const handleBellClick = (): void => {
-    const newState = !isNotifying;
+    const newState = nextSession && !isNotifying;
     setNotifying(newState);
 
     if (newState) {
       chrome.runtime.sendMessage({
         type: "f1-event-notification",
         raceName: nextGp.raceName,
-        sessionName: nextSession?.longName,
+        sessionName: SessionAnnotations[nextSession.annotation].longName,
         sessionTime: getSessionDate(nextSession.session).getTime(),
         delay: timeUntilSession - 30
       });

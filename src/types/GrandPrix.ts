@@ -1,5 +1,10 @@
 import { Circuit } from "./Circuit";
-import { AnnotatedSession, classifySession, Session } from "./Session";
+import {
+  AnnotatedSession,
+  classifySession,
+  Session,
+  SessionAnnotationType
+} from "./Session";
 export interface GrandPrix {
   Circuit: Circuit;
   FirstPractice: Session;
@@ -20,21 +25,19 @@ export interface GrandPrix {
 export const getClassifiedSessions = (gp: GrandPrix): AnnotatedSession[] => {
   return (
     [
-      ["FP1", "First Practice", gp.FirstPractice],
-      ["FP2", "Second Practice", gp.SecondPractice],
-      ["FP3", "Third Practice", gp.ThirdPractice],
-      ["SQ", "Sprint Qualification", gp.SprintQualifying],
-      ["SPR", "Sprint", gp.Sprint],
-      ["QUA", "Qualification", gp.Qualifying],
-      ["GP", "Grand Prix", { date: gp.date, time: gp.time }]
-    ].filter(([_, __, session]) => session !== undefined) as [
-      string,
-      string,
+      [SessionAnnotationType.FirstPractice, gp.FirstPractice],
+      [SessionAnnotationType.SecondPractice, gp.SecondPractice],
+      [SessionAnnotationType.ThirdPractice, gp.ThirdPractice],
+      [SessionAnnotationType.SprintQualification, gp.SprintQualifying],
+      [SessionAnnotationType.Sprint, gp.Sprint],
+      [SessionAnnotationType.Qualification, gp.Qualifying],
+      [SessionAnnotationType.GrandPrix, { date: gp.date, time: gp.time }]
+    ].filter(([_, session]) => session !== undefined) as [
+      SessionAnnotationType,
       Session
     ][]
-  ).map(([shortName, longName, session]) => ({
-    shortName,
-    longName,
+  ).map(([annotation, session]) => ({
+    annotation,
     session,
     state: classifySession(session)
   }));
