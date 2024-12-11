@@ -22,10 +22,10 @@ const isCacheExpired = (endpoint: Endpoint): boolean => {
   }
 
   if (endpoint === Endpoint.Races) {
-    return Date.now() - parseInt(lastUpdate) < 12 * HOUR_IN_MS;
+    return Date.now() - parseInt(lastUpdate) > 12 * HOUR_IN_MS;
   }
 
-  return Date.now() - parseInt(lastUpdate) < 30 * MINUTE_IN_MS;
+  return Date.now() - parseInt(lastUpdate) > 30 * MINUTE_IN_MS;
 };
 
 export const fetchData = async <T extends ApiDataType>({
