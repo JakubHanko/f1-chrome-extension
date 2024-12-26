@@ -5,6 +5,7 @@ import {
   Session,
   SessionAnnotationType
 } from "./Session";
+
 export interface GrandPrix {
   Circuit: Circuit;
   FirstPractice: Session;

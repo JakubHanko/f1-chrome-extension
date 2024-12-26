@@ -59,7 +59,9 @@ export default tseslint.config(
         { blankLine: "always", prev: "*", next: "return" },
         { blankLine: "always", prev: "directive", next: "*" },
         { blankLine: "any", prev: "directive", next: "directive" },
-        { blankLine: "any", prev: "directive", next: "directive" }
+        { blankLine: "any", prev: "directive", next: "directive" },
+        { blankLine: "always", prev: "import", next: "*" },
+        { blankLine: "never", prev: "import", next: "import" }
       ],
       "object-curly-spacing": ["error", "always"],
       "@stylistic/ts/type-annotation-spacing": [

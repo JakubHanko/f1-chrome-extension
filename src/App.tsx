@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-
 import "@mantine/core/styles.css";
-
 import { colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import { AppTabs } from "./components/AppTabs";
 import { Endpoint } from "./types/Endpoint";
