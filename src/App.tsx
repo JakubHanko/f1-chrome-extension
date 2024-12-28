@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { Box, colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
-import { colorsTuple, createTheme, MantineProvider } from "@mantine/core";
+import { Route, Routes } from "react-router-dom";
 import { AppTabs } from "./components/AppTabs";
-import { Endpoint } from "./types/Endpoint";
-import { GrandPrix } from "./types/GrandPrix";
-import { fetchData } from "./utils/api";
+import DriverStats from "./components/DriverStats";
 
 const theme = createTheme({
   fontFamily: "Rajdhani, sans-serif",
@@ -16,23 +13,38 @@ const theme = createTheme({
 });
 
 const App: React.FC = () => {
-  const [grandPrix, setGrandPrix] = useState<GrandPrix[]>([]);
-
-  useEffect(() => {
-    fetchData<GrandPrix>({
-      endpoint: Endpoint.Races
-    })
-      .then((data) => setGrandPrix(data))
-      .catch((error) => console.error(error));
-  }, []);
-
   return (
     <>
       <MantineProvider
         defaultColorScheme="dark"
         theme={theme}
       >
-        <AppTabs grandPrix={grandPrix} />
+        <Box
+          style={{
+            width: "460px",
+            height: "400px",
+            background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
+            backdropFilter: "blur(5px)",
+            border:
+              "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)",
+            borderRadius: "8px"
+          }}
+        >
+          <Routes>
+            <Route
+              index
+              element={<AppTabs />}
+            />
+            <Route
+              path="/:tabValue"
+              element={<AppTabs />}
+            />
+            <Route
+              path="driverstats/:id"
+              element={<DriverStats />}
+            />
+          </Routes>
+        </Box>
       </MantineProvider>
     </>
   );

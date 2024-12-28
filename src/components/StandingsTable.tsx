@@ -1,4 +1,5 @@
 import { Table } from "@mantine/core";
+import { useNavigate } from "react-router-dom";
 import { ConstructorStanding } from "../types/ConstructorStanding";
 import { DriverStanding } from "../types/DriverStanding";
 import { CustomLoader } from "./CustomLoader";
@@ -27,17 +28,15 @@ export const StandingsTable = ({
     return [row.position, row.Constructor.name, row.points];
   };
 
+  const navigate = useNavigate();
+
   return (
     <>
       <Table.ScrollContainer
         minWidth={400}
-        h={350}
+        h={325}
         style={{
-          background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
-          color: "white",
-          borderRadius: "0 0 8px 8px",
-          border:
-            "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
+          background: "transparent"
         }}
         p="md"
       >
@@ -47,6 +46,7 @@ export const StandingsTable = ({
           <Table
             striped
             withTableBorder
+            highlightOnHover
           >
             <Table.Thead>
               <Table.Tr>
@@ -62,7 +62,10 @@ export const StandingsTable = ({
             </Table.Thead>
             <Table.Tbody>
               {...data.map((row, i) => (
-                <Table.Tr key={i}>
+                <Table.Tr
+                  key={i}
+                  onClick={() => navigate("/driverstats/1")}
+                >
                   {...rowMapper(row).map((col, j) => (
                     <Table.Td key={j}>{col}</Table.Td>
                   ))}

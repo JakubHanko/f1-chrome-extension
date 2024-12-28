@@ -21,14 +21,11 @@ const CircuitCard = ({
     <Paper
       shadow="xs"
       p="xl"
-      withBorder
       style={{
-        background: "radial-gradient(circle, #5c0a0a 0%, #1a0000 80%)",
-        color: "white",
-        borderRadius: "0 0 8px 8px"
+        background: "transparent"
       }}
     >
-      <Container p="xl">
+      <Container>
         <CircuitHeader gp={gp} />
         <Divider my="md" />
         <CircuitList
