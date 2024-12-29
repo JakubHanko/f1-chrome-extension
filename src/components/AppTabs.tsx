@@ -1,6 +1,6 @@
 import { Tabs } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Endpoint } from "../types/Endpoint";
 import { GrandPrix } from "../types/GrandPrix";
 import { getSessionLength, SessionAnnotationType } from "../types/Session";
@@ -13,6 +13,7 @@ import { Standings } from "./Standings";
 
 export const AppTabs = (): JSX.Element => {
   const [grandPrix, setGrandPrix] = useState<GrandPrix[]>([]);
+  const { tabValue } = useParams<{ tabValue: string }>();
 
   useEffect(() => {
     fetchData<GrandPrix>({
@@ -29,19 +30,14 @@ export const AppTabs = (): JSX.Element => {
       Date.now()
   );
 
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const activeTab = location.pathname.includes("standings")
-    ? "standings"
-    : "calendar";
 
   return (
     <Tabs
-      value={activeTab}
+      value={tabValue || "calendar"}
       variant="pills"
       radius="xs"
-      onChange={(value) => navigate(`/tabs/${value}`)}
+      onChange={(value) => navigate(`/${value}`)}
     >
       <Tabs.List className={styles.list}>
         <Tabs.Tab value="calendar">Calendar</Tabs.Tab>
