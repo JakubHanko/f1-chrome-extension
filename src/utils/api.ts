@@ -31,24 +31,11 @@ const isCacheExpired = (endpoint: Endpoint): boolean => {
 export const fetchData = async <T extends ApiDataType>({
   endpoint
 }: ApiDataProps): Promise<T[]> => {
-  const year = new Date().getFullYear();
-  let storageKey = `${endpoint}_${year}`;
-
   const makeApiCall = async (): Promise<T[]> => {
-    return fetch(`${API_BASEPATH}/${year}/${endpoint}`)
+    return fetch(`${API_BASEPATH}/current/${endpoint}`)
       .then((response) => {
         if (!response.ok) {
-          // Retry with year - 1 if the first request fails
-          storageKey = `${endpoint}_${year - 1}`;
-
-          return fetch(`${API_BASEPATH}/${year - 1}/${endpoint}`);
-        }
-
-        return response;
-      })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Both API requests failed");
+          throw new Error("API request failed");
         }
 
         return response.json();
@@ -70,13 +57,13 @@ export const fetchData = async <T extends ApiDataType>({
       });
   };
 
-  const cachedData = localStorage.getItem(storageKey);
+  const cachedData = localStorage.getItem(endpoint);
   if (cachedData && !isCacheExpired(endpoint)) {
     return JSON.parse(cachedData);
   }
 
   const apiData = await makeApiCall();
-  localStorage.setItem(storageKey, JSON.stringify(apiData));
+  localStorage.setItem(endpoint, JSON.stringify(apiData));
   localStorage.setItem(`lastupdate_${endpoint}`, Date.now().toString());
 
   return apiData;
