@@ -2,6 +2,7 @@ import { ConstructorStanding } from "../types/ConstructorStanding";
 import { DriverStanding } from "../types/DriverStanding";
 import { Endpoint } from "../types/Endpoint";
 import { GrandPrix } from "../types/GrandPrix";
+import { MRDataResponse } from "../types/MRData";
 
 type ApiDataProps = {
   endpoint: Endpoint;
@@ -33,9 +34,21 @@ export const fetchData = async <T extends ApiDataType>({
 }: ApiDataProps): Promise<T[]> => {
   const makeApiCall = async (): Promise<T[]> => {
     return fetch(`${API_BASEPATH}/current/${endpoint}`)
+      .then(async (response) => {
+        if (
+          !response.ok ||
+          ((await response.json()) as MRDataResponse).MRData.total === "0"
+        ) {
+          const year = new Date().getFullYear() - 1;
+
+          return fetch(`${API_BASEPATH}/${year}/${endpoint}`);
+        }
+
+        return response;
+      })
       .then((response) => {
         if (!response.ok) {
-          throw new Error("API request failed");
+          throw new Error("Both API requests failed");
         }
 
         return response.json();
