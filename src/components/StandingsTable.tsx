@@ -1,6 +1,7 @@
 import { Table } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 import { ConstructorStanding } from "../types/ConstructorStanding";
+import { getDriverName } from "../types/Driver";
 import { DriverStanding } from "../types/DriverStanding";
 import { CustomLoader } from "./CustomLoader";
 
@@ -19,13 +20,21 @@ export const StandingsTable = ({
     if ("Driver" in row) {
       return [
         row.position,
-        `${row.Driver.givenName} ${row.Driver.familyName}`,
+        getDriverName(row.Driver),
         row.Constructors[0].name,
         row.points
       ];
     }
 
     return [row.position, row.Constructor.name, row.points];
+  };
+
+  const rowNavigate = (row: TableDataType): (() => void) => {
+    if ("Driver" in row) {
+      return () => navigate(`/driverstats/${row.Driver.driverId}`);
+    }
+
+    return () => navigate(`/constructorstats/${row.Constructor.constructorId}`);
   };
 
   const navigate = useNavigate();
@@ -64,7 +73,7 @@ export const StandingsTable = ({
               {...data.map((row, i) => (
                 <Table.Tr
                   key={i}
-                  onClick={() => navigate("/driverstats/1")}
+                  onClick={rowNavigate(row)}
                 >
                   {...rowMapper(row).map((col, j) => (
                     <Table.Td key={j}>{col}</Table.Td>

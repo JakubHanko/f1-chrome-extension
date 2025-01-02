@@ -8,3 +8,6 @@ export interface Driver {
   dateOfBirth: string;
   nationality: string;
 }
+
+export const getDriverName = (driver: Driver): string =>
+  `${driver.givenName} ${driver.familyName}`;

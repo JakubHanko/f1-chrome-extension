@@ -3,15 +3,21 @@ import { DriverStanding } from "../types/DriverStanding";
 import { Endpoint } from "../types/Endpoint";
 import { GrandPrix } from "../types/GrandPrix";
 import { MRDataResponse } from "../types/MRData";
+import { RaceResult, RaceResultResponse } from "../types/RaceResult";
 
 type ApiDataProps = {
   endpoint: Endpoint;
+  filter?: string[];
 };
 
 const MINUTE_IN_MS = 60 * 1000;
 const HOUR_IN_MS = 60 * MINUTE_IN_MS;
 
-type ApiDataType = GrandPrix | DriverStanding | ConstructorStanding;
+type ApiDataType =
+  | GrandPrix
+  | DriverStanding
+  | ConstructorStanding
+  | RaceResult;
 
 const API_BASEPATH = "https://api.jolpi.ca/ergast/f1";
 
@@ -30,10 +36,13 @@ const isCacheExpired = (endpoint: Endpoint): boolean => {
 };
 
 export const fetchData = async <T extends ApiDataType>({
-  endpoint
+  endpoint,
+  filter
 }: ApiDataProps): Promise<T[]> => {
+  const finalEndpoint = [...(filter ?? []), endpoint].join("/");
+
   const makeApiCall = async (): Promise<T[]> => {
-    return fetch(`${API_BASEPATH}/current/${endpoint}`)
+    return fetch(`${API_BASEPATH}/current/${finalEndpoint}`)
       .then(async (response) => {
         if (
           !response.ok ||
@@ -41,7 +50,7 @@ export const fetchData = async <T extends ApiDataType>({
         ) {
           const year = new Date().getFullYear() - 1;
 
-          return fetch(`${API_BASEPATH}/${year}/${endpoint}`);
+          return fetch(`${API_BASEPATH}/${year}/${finalEndpoint}`);
         }
 
         return response;
@@ -54,8 +63,14 @@ export const fetchData = async <T extends ApiDataType>({
         return response.json();
       })
       .then((result) => {
-        if ("RaceTable" in result.MRData) {
+        if (endpoint === Endpoint.Races) {
           return result.MRData.RaceTable.Races;
+        } else if (endpoint === Endpoint.Results) {
+          return result.MRData.RaceTable.Races.map((r: RaceResultResponse) => ({
+            ...r.Results[0],
+            circuit: r.Circuit,
+            round: r.round
+          }));
         }
         const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
         const standingsKey = Object.keys(standingsObject).find((key) =>
@@ -70,14 +85,14 @@ export const fetchData = async <T extends ApiDataType>({
       });
   };
 
-  const cachedData = localStorage.getItem(endpoint);
+  const cachedData = localStorage.getItem(finalEndpoint);
   if (cachedData && !isCacheExpired(endpoint)) {
     return JSON.parse(cachedData);
   }
 
   const apiData = await makeApiCall();
-  localStorage.setItem(endpoint, JSON.stringify(apiData));
-  localStorage.setItem(`lastupdate_${endpoint}`, Date.now().toString());
+  localStorage.setItem(finalEndpoint, JSON.stringify(apiData));
+  localStorage.setItem(`lastupdate_${finalEndpoint}`, Date.now().toString());
 
   return apiData;
 };

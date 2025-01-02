@@ -2,6 +2,7 @@ import { Box, colorsTuple, createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { Route, Routes } from "react-router-dom";
 import { AppTabs } from "./components/AppTabs";
+import ConstructorStats from "./components/ConstructorStats";
 import DriverStats from "./components/DriverStats";
 
 const theme = createTheme({
@@ -42,6 +43,10 @@ const App: React.FC = () => {
             <Route
               path="driverstats/:id"
               element={<DriverStats />}
+            />
+            <Route
+              path="constructorstats/:id"
+              element={<ConstructorStats />}
             />
           </Routes>
         </Box>
