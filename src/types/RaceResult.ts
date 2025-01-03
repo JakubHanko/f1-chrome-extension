@@ -3,8 +3,6 @@ import { Constructor } from "./Constructor";
 import { Driver } from "./Driver";
 
 export interface RaceResult {
-  circuit: Circuit;
-  round: string;
   number: string;
   position: string;
   positionText: string;
@@ -31,7 +29,18 @@ export interface RaceResult {
   };
 }
 
-export interface RaceResultResponse {
+export const getTime = (result: RaceResult): string => {
+  if (result.status === "Disqualified") {
+    return "DSQ";
+  }
+  if (!result.Time) {
+    return "DNF";
+  }
+
+  return result.Time.time;
+};
+
+export interface Race {
   Circuit: Circuit;
   round: string;
   Results: RaceResult[];

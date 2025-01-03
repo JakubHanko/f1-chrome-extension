@@ -3,7 +3,7 @@ import { DriverStanding } from "../types/DriverStanding";
 import { Endpoint } from "../types/Endpoint";
 import { GrandPrix } from "../types/GrandPrix";
 import { MRDataResponse } from "../types/MRData";
-import { RaceResult, RaceResultResponse } from "../types/RaceResult";
+import { Race } from "../types/RaceResult";
 
 type ApiDataProps = {
   endpoint: Endpoint;
@@ -13,11 +13,7 @@ type ApiDataProps = {
 const MINUTE_IN_MS = 60 * 1000;
 const HOUR_IN_MS = 60 * MINUTE_IN_MS;
 
-type ApiDataType =
-  | GrandPrix
-  | DriverStanding
-  | ConstructorStanding
-  | RaceResult;
+type ApiDataType = GrandPrix | DriverStanding | ConstructorStanding | Race;
 
 const API_BASEPATH = "https://api.jolpi.ca/ergast/f1";
 
@@ -42,7 +38,7 @@ export const fetchData = async <T extends ApiDataType>({
   const finalEndpoint = [...(filter ?? []), endpoint].join("/");
 
   const makeApiCall = async (): Promise<T[]> => {
-    return fetch(`${API_BASEPATH}/current/${finalEndpoint}`)
+    return fetch(`${API_BASEPATH}/current/${finalEndpoint}?limit=100`)
       .then(async (response) => {
         if (
           !response.ok ||
@@ -50,7 +46,7 @@ export const fetchData = async <T extends ApiDataType>({
         ) {
           const year = new Date().getFullYear() - 1;
 
-          return fetch(`${API_BASEPATH}/${year}/${finalEndpoint}`);
+          return fetch(`${API_BASEPATH}/${year}/${finalEndpoint}?limit=100`);
         }
 
         return response;
@@ -63,14 +59,8 @@ export const fetchData = async <T extends ApiDataType>({
         return response.json();
       })
       .then((result) => {
-        if (endpoint === Endpoint.Races) {
+        if (endpoint === Endpoint.Races || endpoint === Endpoint.Results) {
           return result.MRData.RaceTable.Races;
-        } else if (endpoint === Endpoint.Results) {
-          return result.MRData.RaceTable.Races.map((r: RaceResultResponse) => ({
-            ...r.Results[0],
-            circuit: r.Circuit,
-            round: r.round
-          }));
         }
         const standingsObject = result.MRData.StandingsTable.StandingsLists[0];
         const standingsKey = Object.keys(standingsObject).find((key) =>

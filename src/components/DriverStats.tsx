@@ -1,45 +1,27 @@
-import { Box, Button, Table, Text, Title } from "@mantine/core";
-import { IconArrowLeft, IconStopwatch } from "@tabler/icons-react";
+import { Table } from "@mantine/core";
+import { IconStopwatch } from "@tabler/icons-react";
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDriverName } from "../types/Driver";
+import { useParams } from "react-router-dom";
+import { Driver, getDriverName } from "../types/Driver";
 import { Endpoint } from "../types/Endpoint";
 import { FlagUsage } from "../types/FlagUsage";
-import { RaceResult } from "../types/RaceResult";
+import { getTime, Race } from "../types/RaceResult";
 import { fetchData } from "../utils/api";
 import { Flag } from "./Flag";
+import { StatsTable } from "./StatsTable";
 
-const getFastestLapsCount = (results: RaceResult[]): number =>
-  results.filter((result) => result.FastestLap?.rank === "1").length;
-
-const getWinsCount = (results: RaceResult[]): number =>
-  results.filter((result) => result.position === "1").length;
-
-const getPodiumsCount = (results: RaceResult[]): number =>
-  results.filter((result) => ["1", "2", "3"].includes(result.position)).length;
-
-const getTime = (result: RaceResult): string => {
-  if (result.status === "Disqualified") {
-    return "DSQ";
-  }
-  if (!result.Time) {
-    return "DNF";
-  }
-
-  return result.Time.time;
-};
+const getDriver = (races: Race[]): Driver => races[0].Results[0].Driver;
 
 const DriverStats: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const [stats, setStats] = useState<RaceResult[]>([]);
-  const navigate = useNavigate();
+  const [stats, setStats] = useState<Race[]>([]);
 
   if (!id) {
     throw new Error("No driver ID provided");
   }
 
   useEffect(() => {
-    fetchData<RaceResult>({
+    fetchData<Race>({
       endpoint: Endpoint.Results,
       filter: ["drivers", id]
     })
@@ -49,71 +31,35 @@ const DriverStats: React.FC = () => {
 
   return (
     <>
-      {stats.length > 0 && (
-        <Box
-          p="xl"
-          bg="transparent"
-        >
-          <Button
-            leftSection={<IconArrowLeft />}
-            onClick={() => navigate(-1)}
-            size="sm"
-            bg="transparent"
-          >
-            Go Back
-          </Button>
-          <Title order={1}>{getDriverName(stats[0].Driver)}</Title>
-          <Text>
-            Wins: {getWinsCount(stats)} &middot; Podiums:{" "}
-            {getPodiumsCount(stats)} &middot; Fastest Laps:{" "}
-            {getFastestLapsCount(stats)}
-          </Text>
-          <Table.ScrollContainer
-            minWidth={350}
-            h={250}
-            p="sm"
-          >
-            <Table
-              striped
-              withTableBorder
-              withColumnBorders
-              highlightOnHover
-              ta={"center"}
-            >
-              <Table.Thead>
-                <Table.Tr tt={"uppercase"}>
-                  <Table.Th>Round</Table.Th>
-                  <Table.Th>GP</Table.Th>
-                  <Table.Th>Pos</Table.Th>
-                  <Table.Th>Time</Table.Th>
-                  <Table.Th>Pts</Table.Th>
-                  <Table.Th>Fastest Lap</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {...stats.map((result, i) => (
-                  <Table.Tr key={i}>
-                    <Table.Td>{result.round}</Table.Td>
-                    <Table.Td>
-                      <Flag
-                        location={result.circuit.Location}
-                        usage={FlagUsage.STATS}
-                      />
-                    </Table.Td>
-                    <Table.Td>{result.position}</Table.Td>
-                    <Table.Td>{getTime(result)}</Table.Td>
-                    <Table.Td>{result.points}</Table.Td>
-                    <Table.Td>
-                      {result.FastestLap ? result.FastestLap.Time.time : "-"}
-                      {result.FastestLap?.rank === "1" && <IconStopwatch />}
-                    </Table.Td>
-                  </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
-          </Table.ScrollContainer>
-        </Box>
-      )}
+      <StatsTable
+        header={["Round", "GP", "Pos", "Time", "Pts", "Fastest Lap"]}
+        titleCallback={() => getDriverName(getDriver(stats))}
+        races={stats}
+        rowMapper={(result) => (
+          <Table.Tr key={result.round}>
+            <Table.Td>{result.round}</Table.Td>
+            <Table.Td>
+              <Flag
+                location={result.Circuit.Location}
+                usage={FlagUsage.STATS}
+              />
+            </Table.Td>
+            {...result.Results.map((result) => (
+              <>
+                <Table.Td>{result.position}</Table.Td>
+                <Table.Td>{getTime(result)}</Table.Td>
+                <Table.Td>{result.points}</Table.Td>
+                <Table.Td>
+                  {result.FastestLap ? result.FastestLap.Time.time : "-"}
+                  {result.FastestLap?.rank === "1" && (
+                    <IconStopwatch style={{ verticalAlign: "middle" }} />
+                  )}
+                </Table.Td>
+              </>
+            ))}
+          </Table.Tr>
+        )}
+      />
     </>
   );
 };
