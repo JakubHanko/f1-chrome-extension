@@ -35,6 +35,7 @@ const App: React.FC = () => {
             <Route
               element={<AppTabs />}
               index
+              path={"/*"}
             />
             <Route
               element={<AppTabs />}
