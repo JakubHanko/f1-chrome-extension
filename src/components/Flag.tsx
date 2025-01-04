@@ -1,8 +1,14 @@
 import { getCode } from "country-list";
+import { FlagUsage } from "../types/FlagUsage";
 import { Location } from "../types/Location";
 import "./Flag.css";
 
-export const Flag = ({ location }: { location: Location }): JSX.Element => {
+type FlagProps = {
+  location: Location;
+  usage: FlagUsage;
+};
+
+export const Flag = ({ location, usage }: FlagProps): JSX.Element => {
   let code = getCode(location.country) || "";
   if (["USA", "United States"].includes(location.country)) {
     code = "US";
@@ -14,7 +20,7 @@ export const Flag = ({ location }: { location: Location }): JSX.Element => {
 
   return (
     <>
-      <span className={`fi fi-${code.toLowerCase()}`} />
+      <span className={`fi fi-${code.toLowerCase()} fi-${usage}`} />
     </>
   );
 };

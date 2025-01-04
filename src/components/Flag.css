@@ -1,6 +1,15 @@
 .fi {
+  border: 1px solid white;
+}
+
+.fi-carousel {
   height: 60px;
   width: 80px;
-  border: 1px solid white;
   border-radius: 8px;
+}
+
+.fi-stats {
+  height: 30px;
+  width: 40px;
+  border-radius: 50%;
 }

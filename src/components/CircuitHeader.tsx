@@ -1,4 +1,5 @@
 import { Grid, Stack, Text } from "@mantine/core";
+import { FlagUsage } from "../types/FlagUsage";
 import { GrandPrix } from "../types/GrandPrix";
 import { Flag } from "./Flag";
 
@@ -7,7 +8,10 @@ export const CircuitHeader = ({ gp }: { gp: GrandPrix }): JSX.Element => {
     <>
       <Grid pb="xs">
         <Grid.Col span={4}>
-          <Flag location={gp.Circuit.Location} />
+          <Flag
+            location={gp.Circuit.Location}
+            usage={FlagUsage.CAROUSEL}
+          />
         </Grid.Col>
         <Grid.Col span={8}>
           <Stack>

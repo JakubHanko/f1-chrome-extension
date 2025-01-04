@@ -1,5 +1,6 @@
 export enum Endpoint {
   Races = "races",
   DriverStandings = "driverstandings",
-  ConstructorStandings = "constructorstandings"
+  ConstructorStandings = "constructorstandings",
+  Results = "results"
 }
