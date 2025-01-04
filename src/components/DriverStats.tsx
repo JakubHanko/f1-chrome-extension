@@ -33,7 +33,6 @@ const DriverStats: React.FC = () => {
     <>
       <StatsTable
         header={["Round", "GP", "Pos", "Time", "Pts", "Fastest Lap"]}
-        titleCallback={() => getDriverName(getDriver(stats))}
         races={stats}
         rowMapper={(result) => (
           <Table.Tr key={result.round}>
@@ -51,14 +50,15 @@ const DriverStats: React.FC = () => {
                 <Table.Td>{result.points}</Table.Td>
                 <Table.Td>
                   {result.FastestLap ? result.FastestLap.Time.time : "-"}
-                  {result.FastestLap?.rank === "1" && (
+                  {result.FastestLap?.rank === "1" ? (
                     <IconStopwatch style={{ verticalAlign: "middle" }} />
-                  )}
+                  ) : null}
                 </Table.Td>
               </>
             ))}
           </Table.Tr>
         )}
+        titleCallback={() => getDriverName(getDriver(stats))}
       />
     </>
   );

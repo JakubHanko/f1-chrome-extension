@@ -18,9 +18,9 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
   if (state === SessionState.FUTURE) {
     return (
       <ThemeIcon
-        color="yellow"
+        color={"yellow"}
+        radius={"xl"}
         size={16}
-        radius="xl"
       >
         <IconClock size={10} />
       </ThemeIcon>
@@ -28,9 +28,9 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
   } else if (state === SessionState.NEXT) {
     return (
       <ThemeIcon
-        color="blue"
+        color={"blue"}
+        radius={"xl"}
         size={16}
-        radius="xl"
       >
         <IconFlag size={10} />
       </ThemeIcon>
@@ -38,9 +38,9 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
   } else if (state === SessionState.IN_PROGRESS) {
     return (
       <ThemeIcon
-        color="red"
+        color={"red"}
+        radius={"xl"}
         size={16}
-        radius="xl"
       >
         <IconPlayerPlay size={10} />
       </ThemeIcon>
@@ -49,9 +49,9 @@ const Icon = ({ state }: { state: SessionState }): JSX.Element => {
 
   return (
     <ThemeIcon
-      color="teal"
+      color={"teal"}
+      radius={"xl"}
       size={16}
-      radius="xl"
     >
       <IconCheck size={10} />
     </ThemeIcon>
@@ -79,21 +79,21 @@ const ListItem = ({
   return (
     <>
       <GridCol
-        span={2}
         offset={1}
+        span={2}
       >
         <Icon state={state} />
       </GridCol>
       <GridCol span={2}>
         <Text
-          size="sm"
           c={state === SessionState.PAST ? "dimmed" : "white"}
+          size={"sm"}
         >
           {SessionAnnotations[annotation].shortName}
         </Text>
       </GridCol>
       <GridCol span={7}>
-        <Text size="xs">
+        <Text size={"xs"}>
           {day} &middot; {date} &middot; {time}
         </Text>
       </GridCol>
@@ -128,9 +128,9 @@ export const CircuitList = ({
 
   return (
     <Grid
-      justify="center"
-      align="center"
-      gutter="xs"
+      align={"center"}
+      gutter={"xs"}
+      justify={"center"}
     >
       {...classifiedSessions.map((el, i) => (
         <ListItem

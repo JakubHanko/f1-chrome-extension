@@ -5,9 +5,9 @@ export const CustomLoader = (): JSX.Element => {
     <>
       <Center style={{ height: "30vh" }}>
         <Loader
-          size="xl"
-          color="red"
-          type="dots"
+          color={"red"}
+          size={"xl"}
+          type={"dots"}
         />
       </Center>
     </>

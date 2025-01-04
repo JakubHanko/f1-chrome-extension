@@ -17,7 +17,7 @@ const App: React.FC = () => {
   return (
     <>
       <MantineProvider
-        defaultColorScheme="dark"
+        defaultColorScheme={"dark"}
         theme={theme}
       >
         <Box
@@ -33,20 +33,20 @@ const App: React.FC = () => {
         >
           <Routes>
             <Route
+              element={<AppTabs />}
               index
-              element={<AppTabs />}
             />
             <Route
-              path="/:tabValue/*"
               element={<AppTabs />}
+              path={"/:tabValue/*"}
             />
             <Route
-              path="driverstats/:id"
               element={<DriverStats />}
+              path={"driverstats/:id"}
             />
             <Route
-              path="constructorstats/:id"
               element={<ConstructorStats />}
+              path={"constructorstats/:id"}
             />
           </Routes>
         </Box>

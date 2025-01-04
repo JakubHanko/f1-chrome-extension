@@ -40,10 +40,9 @@ export const Standings = (): JSX.Element => {
   return (
     <>
       <SegmentedControl
+        color={"f1red"}
         data={options}
-        value={value}
         onChange={(option) => navigate(`/standings/${option.toLowerCase()}`)}
-        color="f1red"
         styles={{
           root: {
             width: "100%",
@@ -52,34 +51,35 @@ export const Standings = (): JSX.Element => {
               "calc(0.0625rem * var(--mantine-scale)) solid var(--mantine-color-dark-4)"
           }
         }}
+        value={value}
       />
       <Routes>
         <Route
+          element={
+            <StandingsTable
+              data={driverData}
+              header={["Pos", "Driver", "Car", "Pts"]}
+            />
+          }
           index
-          element={
-            <StandingsTable
-              header={["Pos", "Driver", "Car", "Pts"]}
-              data={driverData}
-            />
-          }
         />
         <Route
-          path="drivers"
           element={
             <StandingsTable
-              header={["Pos", "Driver", "Car", "Pts"]}
               data={driverData}
+              header={["Pos", "Driver", "Car", "Pts"]}
             />
           }
+          path={"drivers"}
         />
         <Route
-          path="constructors"
           element={
             <StandingsTable
-              header={["Pos", "Team", "Pts"]}
               data={constructorData}
+              header={["Pos", "Team", "Pts"]}
             />
           }
+          path={"constructors"}
         />
       </Routes>
     </>

@@ -42,20 +42,20 @@ export const StandingsTable = ({
   return (
     <>
       <Table.ScrollContainer
-        minWidth={400}
         h={325}
+        minWidth={400}
+        p={"md"}
         style={{
           background: "transparent"
         }}
-        p="md"
       >
         {!data || data.length === 0 ? (
           <CustomLoader />
         ) : (
           <Table
+            highlightOnHover
             striped
             withTableBorder
-            highlightOnHover
           >
             <Table.Thead>
               <Table.Tr>

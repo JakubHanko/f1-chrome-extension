@@ -77,7 +77,28 @@ export default tseslint.config(
       ],
       "arrow-parens": ["error", "always"],
       "keyword-spacing": ["error", { before: true, after: true }],
-      "comma-spacing": ["error", { before: false, after: true }]
+      "comma-spacing": ["error", { before: false, after: true }],
+      "react/jsx-curly-brace-presence": [
+        "error",
+        { props: "always", children: "never" }
+      ],
+      "react/jsx-sort-props": "error",
+      "react/jsx-pascal-case": "error",
+      "react/jsx-no-script-url": "error",
+      "react/no-children-prop": "error",
+      "react/no-danger": "error",
+      "react/no-danger-with-children": "error",
+      "react/destructuring-assignment": ["error", "always"],
+      "react/no-unused-prop-types": "error",
+      "react/no-unused-class-component-methods": "error",
+      "react/no-unknown-property": "error",
+      "react/prefer-stateless-function": "error",
+      "react/jsx-no-leaked-render": ["error", { validStrategies: ["ternary"] }],
+      "react/jsx-max-depth": ["error", { max: 5 }],
+      "react/function-component-definition": [
+        "warn",
+        { namedComponents: "arrow-function" }
+      ]
     },
     settings: {
       "import/resolver": {

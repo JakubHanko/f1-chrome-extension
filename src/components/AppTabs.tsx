@@ -34,29 +34,29 @@ export const AppTabs = (): JSX.Element => {
 
   return (
     <Tabs
-      value={tabValue || "calendar"}
-      variant="pills"
-      radius="xs"
       onChange={(value) => navigate(`/${value}`)}
+      radius={"xs"}
+      value={tabValue || "calendar"}
+      variant={"pills"}
     >
       <Tabs.List className={styles.list}>
-        <Tabs.Tab value="calendar">Calendar</Tabs.Tab>
-        <Tabs.Tab value="standings">Standings</Tabs.Tab>
+        <Tabs.Tab value={"calendar"}>Calendar</Tabs.Tab>
+        <Tabs.Tab value={"standings"}>Standings</Tabs.Tab>
       </Tabs.List>
       {grandPrix.length === 0 ? (
         <CustomLoader />
       ) : (
         <>
-          <Tabs.Panel value="calendar">
-            {"storage" in chrome && nextGpIndex !== -1 && (
+          <Tabs.Panel value={"calendar"}>
+            {"storage" in chrome && nextGpIndex !== -1 ? (
               <NotificationsBell nextGp={grandPrix[nextGpIndex]} />
-            )}
+            ) : null}
             <CircuitCarousel
               data={grandPrix}
               initialSlide={nextGpIndex}
             />
           </Tabs.Panel>
-          <Tabs.Panel value="standings">
+          <Tabs.Panel value={"standings"}>
             <Standings />
           </Tabs.Panel>
         </>

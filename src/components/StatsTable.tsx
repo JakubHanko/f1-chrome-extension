@@ -22,14 +22,14 @@ export const StatsTable = ({
   return (
     <>
       <Box
-        p="sm"
-        bg="transparent"
+        bg={"transparent"}
+        p={"sm"}
       >
         <Button
+          bg={"transparent"}
           leftSection={<IconArrowLeft />}
           onClick={() => navigate(-1)}
-          size="sm"
-          bg="transparent"
+          size={"sm"}
         >
           Go Back
         </Button>
@@ -39,23 +39,23 @@ export const StatsTable = ({
           <>
             <Title order={1}>{titleCallback()}</Title>
             <Table.ScrollContainer
-              minWidth={350}
               h={300}
-              p="sm"
+              minWidth={350}
+              p={"sm"}
             >
               <Table
-                striped
-                withTableBorder
-                withColumnBorders
                 highlightOnHover
+                striped
                 ta={"center"}
+                withColumnBorders
+                withTableBorder
               >
                 <Table.Thead>
                   <Table.Tr tt={"uppercase"}>
                     {header.map((h, i) => (
                       <Table.Th
                         key={i}
-                        ta="center"
+                        ta={"center"}
                       >
                         {h}
                       </Table.Th>

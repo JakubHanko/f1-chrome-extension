@@ -16,7 +16,7 @@ const getStackedCell = (
   mapper: (data: RaceResult) => string
 ): JSX.Element => {
   return (
-    <Stack gap="xs">
+    <Stack gap={"xs"}>
       {data.Results.sort((a, b) => a.Driver.code.localeCompare(b.Driver.code))
         .map(mapper)
         .map((item, index) => (
@@ -47,7 +47,6 @@ const ConstructorStats = (): JSX.Element => {
     <>
       <StatsTable
         header={["Round", "GP", "Dri", "Pos", "Time", "Pts"]}
-        titleCallback={() => getConstructorName(stats)}
         races={stats}
         rowMapper={(result) => (
           <Table.Tr key={result.round}>
@@ -72,6 +71,7 @@ const ConstructorStats = (): JSX.Element => {
             </Table.Td>
           </Table.Tr>
         )}
+        titleCallback={() => getConstructorName(stats)}
       />
     </>
   );

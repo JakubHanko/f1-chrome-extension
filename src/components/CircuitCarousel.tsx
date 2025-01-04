@@ -19,15 +19,15 @@ const CircuitCard = ({
 }): JSX.Element => {
   return (
     <Paper
-      shadow="xs"
-      p="xl"
+      p={"xl"}
+      shadow={"xs"}
       style={{
         background: "transparent"
       }}
     >
       <Container>
         <CircuitHeader gp={gp} />
-        <Divider my="md" />
+        <Divider my={"md"} />
         <CircuitList
           gp={gp}
           isNext={isGpNext}
@@ -57,16 +57,16 @@ export const CircuitCarousel = ({
     <Carousel
       classNames={classes}
       initialSlide={initialSlide === -1 ? data.length : initialSlide}
-      previousControlIcon={
-        <IconChevronCompactLeft
-          className={classes.leftArrow}
-          color="red"
-        />
-      }
       nextControlIcon={
         <IconChevronCompactRight
           className={classes.rightArrow}
-          color="red"
+          color={"red"}
+        />
+      }
+      previousControlIcon={
+        <IconChevronCompactLeft
+          className={classes.leftArrow}
+          color={"red"}
         />
       }
     >

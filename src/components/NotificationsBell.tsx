@@ -63,9 +63,9 @@ export const NotificationsBell = ({
           <ActionIcon
             color={isNotifying ? "f1red" : "gray"}
             onClick={handleBellClick}
-            variant="filled"
-            size="lg"
-            radius="xl"
+            radius={"xl"}
+            size={"lg"}
+            variant={"filled"}
           >
             {isNotifying ? <IconBellOff /> : <IconBell />}
           </ActionIcon>
