@@ -42,7 +42,8 @@ export const fetchData = async <T extends ApiDataType>({
       .then(async (response) => {
         if (
           !response.ok ||
-          ((await response.json()) as MRDataResponse).MRData.total === "0"
+          ((await response.clone().json()) as MRDataResponse).MRData.total ===
+            "0"
         ) {
           const year = new Date().getFullYear() - 1;
 

@@ -70,11 +70,14 @@ const ListItem = ({
     day: "numeric",
     year: "numeric"
   });
-  const time = sessionDate.toLocaleTimeString(undefined, {
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: false
-  });
+  const time =
+    session.time === undefined
+      ? ""
+      : sessionDate.toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: false
+      });
 
   return (
     <>
@@ -94,7 +97,7 @@ const ListItem = ({
       </GridCol>
       <GridCol span={7}>
         <Text size={"xs"}>
-          {day} &middot; {date} &middot; {time}
+          {day} &middot; {date} {time ? `&middot; ${time}` : null}
         </Text>
       </GridCol>
     </>

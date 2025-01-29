@@ -52,7 +52,9 @@ export type AnnotatedSession = {
 };
 
 export const getSessionDate = (session: Session): Date =>
-  new Date(`${session.date}T${session.time}`);
+  session.time === undefined
+    ? new Date(session.date)
+    : new Date(`${session.date}T${session.time}`);
 
 export const classifySession = (session: Session): SessionState =>
   getSessionDate(session) < new Date()
