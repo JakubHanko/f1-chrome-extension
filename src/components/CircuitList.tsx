@@ -97,7 +97,7 @@ const ListItem = ({
       </GridCol>
       <GridCol span={7}>
         <Text size={"xs"}>
-          {day} &middot; {date} {time ? `&middot; ${time}` : null}
+          {day} · {date} {time ? `· ${time}` : null}
         </Text>
       </GridCol>
     </>
